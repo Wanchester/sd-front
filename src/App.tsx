@@ -1,7 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { GlobalStyle } from "./GlobalStyle";
+import HelloWorld from "./HelloWorld";
+const App = () => {
+  return (
+    <Fragment>
+      <HelloWorld />
+      <GlobalStyle />
+    </Fragment>
+  );
+};
 
-export default class App extends React.Component {
-  render() {
-    return <></>;
-  }
-}
+export default App;
