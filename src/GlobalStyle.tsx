@@ -7,10 +7,13 @@ export const GlobalStyle = createGlobalStyle`
         --black : #191919;
         --red : #c84b31;
         --blue: #2d4263;
+        --textSmall: 12px;
+        --textMedium: 15px;
     }
     p{
         color : var(--white);
         border: 1px solid var(--blue);
+        font-size: var(--textSmall)
     }
     body{
         background-color: var(--black);
@@ -19,4 +22,5 @@ export const GlobalStyle = createGlobalStyle`
     h1{
         color : var(--red);
     }
+
 `;
