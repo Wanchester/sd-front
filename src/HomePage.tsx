@@ -4,6 +4,7 @@ import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import TrainingSessionList from "./components/trainingSessionList/TrainingSessionList";
 import TestImage from "./image/test.jpeg";
+import Teams from "./components/teams/Teams";
 
 export interface UserListInterface {
   user: {
@@ -27,6 +28,12 @@ const HomePage = () => {
       trainingList: [{ running: "12/12/12", walking: "1/1/12" }],
     },
   } as UserListInterface;
+  const teamsList = {
+    team: {
+      teamName: "TeamName here",
+    },
+  };
+  
   return (
     <>
       <Table responsive borderless hover>
@@ -37,6 +44,15 @@ const HomePage = () => {
             </td>
             <td colSpan={2}>
               <UserDescription userList={userList} />
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      <Table responsive borderless hover>
+        <tbody>
+          <tr>
+            <td colSpan={6}>
+              <Teams teamsList={teamsList} />
             </td>
           </tr>
         </tbody>
