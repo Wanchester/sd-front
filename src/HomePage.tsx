@@ -1,6 +1,5 @@
 import react from "react";
-import Table from "react-bootstrap/Table";
-import Container from "react-bootstrap/Container";
+import { Container, Table, Button } from "react-bootstrap";
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import TrainingSessionList from "./components/trainingSessionList/TrainingSessionList";
@@ -41,12 +40,15 @@ const HomePage = () => {
             <Avatar imageLink={TestImage} />
           </div>
         </Col>
-        <Col className="flex-grow-1" sm={6} md={8} lg={9} xl={10}>
+        <Col className="flex-grow-1" sm={6} md={7} lg={8} xl={7}>
           <UserDescription userList={userList} />
+        </Col>
+        <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={3}>
+          <Button>My statistics</Button>
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col md={{ span: 8, offset: 3 }}>
           <TrainingSessionList trainingList={userList.user.trainingList} />
         </Col>
       </Row>

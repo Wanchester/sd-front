@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
+import { Table, Button } from "react-bootstrap";
 import { UserListInterface } from "../../HomePage";
 import { Info, Context } from "./UserDescription.styles";
+import { FaEdit } from "react-icons/fa";
 const UserDescription = ({ userList }: { userList: UserListInterface }) => {
   const [isEdit, setEdit] = useState(true);
 
   return (
-    <Table responsive borderless hover>
+    <Table responsive bordered variant="dark" className="table-condensed">
       {userList &&
         Object.entries(userList.user).map((arr, i) => {
           if (arr[0].localeCompare("trainingList") === 0) {
@@ -34,7 +34,9 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
                   {arr[0].localeCompare("dateOfBirth") === 0 ||
                   (arr[0].localeCompare("nationality") === 0 &&
                     arr[0].localeCompare("trainingList") !== 0) ? (
-                    <button onClick={() => setEdit(!isEdit)}>Click me</button>
+                    <Button onClick={() => setEdit(!isEdit)}>
+                      <FaEdit />
+                    </Button>
                   ) : null}
                 </td>
               </tr>

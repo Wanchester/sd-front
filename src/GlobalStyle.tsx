@@ -18,4 +18,7 @@ export const GlobalStyle = createGlobalStyle`
     h1{
         color : var(--red);
     }
+    table, td, th{
+        color: var(--white);
+    }
 `;
