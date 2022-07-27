@@ -10,20 +10,12 @@ export const GlobalStyle = createGlobalStyle`
         --textSmall: 12px;
         --textMedium: 15px;
     }
-    p{
-        color : var(--white);
-        border: 1px solid var(--blue);
-        font-size: var(--textSmall)
-    }
     body{
         background-color: var(--black);
         font-family: 'Roboto', sans-serif;
+        color: var(--white);
     }
     h1{
         color : var(--red);
     }
-    td{
-        color: var(--white);
-    }
-
 `;

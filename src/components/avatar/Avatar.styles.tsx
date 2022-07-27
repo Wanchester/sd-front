@@ -3,8 +3,7 @@ export const Wrapper = styled.div`
   background: var(--black);
   padding: 5px;
   text-align: center;
-  width: 150px;
-  height: 150px;
+  margin-top: 5px;
 `;
 export const Image = styled.img`
   width: 100%;

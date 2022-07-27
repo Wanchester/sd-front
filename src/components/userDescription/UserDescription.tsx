@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { UserListInterface } from "../../HomePage";
 import { Info, Context } from "./UserDescription.styles";
@@ -15,10 +16,10 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
           return (
             <tbody key={i}>
               <tr>
-                <td colSpan={2}>
+                <td>
                   <Context>{arr[0]}</Context>
                 </td>
-                <td colSpan={2}>
+                <td>
                   {isEdit ? (
                     <Info>
                       {(arr[1] as string)
@@ -34,9 +35,7 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
                   (arr[0].localeCompare("nationality") === 0 &&
                     arr[0].localeCompare("trainingList") !== 0) ? (
                     <button onClick={() => setEdit(!isEdit)}>Click me</button>
-                  ) : (
-                    "Not editable"
-                  )}
+                  ) : null}
                 </td>
               </tr>
             </tbody>

@@ -16,7 +16,6 @@ export const Info = styled.p`
 export const Context = styled.p`
   font-size: var(--textMedium);
   color: #686868;
-  opacity: 1.2;
   width: 100%;
   border: none;
   text-display: center;
