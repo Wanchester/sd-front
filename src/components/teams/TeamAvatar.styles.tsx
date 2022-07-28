@@ -15,4 +15,5 @@ export const Image = styled.img`
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  padding: 5px;
 `;

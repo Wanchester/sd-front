@@ -11,7 +11,6 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
       {userList &&
         Object.entries(userList.user).map((arr, i) => {
           if (arr[0].localeCompare("trainingList") === 0) {
-            return;
           }
           return (
             <tbody key={i}>

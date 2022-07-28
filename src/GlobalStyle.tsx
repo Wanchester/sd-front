@@ -19,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
         color : var(--red);
     }
     table, td, th{
+        margin-bottom: 0;
         color: var(--white);
     }
 `;

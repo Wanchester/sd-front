@@ -50,14 +50,14 @@ const HomePage = () => {
             <Avatar imageLink={TestImage} />
           </div>
         </Col>
-        <Col className=" flex-grow-1 " sm={6} md={7} lg={8} xl={7}>
+        <Col className=" flex-grow-1 " sm={6} md={7} lg={7} xl={7}>
           <UserDescription userList={userList} />
         </Col>
         <Col
           className="d-flex flex-direction: column flex-grow-1 justify-content-right align-self-end"
           sm={6}
           md={4}
-          lg={3}
+          lg={2}
           xl={3}
         >
           <Button>My statistics</Button>
@@ -69,12 +69,12 @@ const HomePage = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={{ span: 6, offset: 2 }}>
+        <Col md={{ span: 7, offset: 2 }}>
           <Teams teamsList={teamsList} />
         </Col>
       </Row>
       <Row>
-        <Col md={{ span: 6, offset: 2 }}>
+        <Col lg={{ span: 7, offset: 2 }}>
           <TrainingSessionList trainingList={userList.user.trainingList} />
         </Col>
       </Row>

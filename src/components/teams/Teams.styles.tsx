@@ -12,4 +12,5 @@ export const TeamName = styled.p`
   text-align: center;
   height: 220px;
   font-size: large;
+  padding: 5px;
 `;
