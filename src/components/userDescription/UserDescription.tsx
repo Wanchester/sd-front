@@ -7,11 +7,9 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
   const [isEdit, setEdit] = useState(true);
 
   return (
-    <Table responsive bordered variant="dark" className="table-condensed">
+    <Table responsive bordered variant="dark" className="table-condensed mb-0">
       {userList &&
         Object.entries(userList.user).map((arr, i) => {
-          if (arr[0].localeCompare("trainingList") === 0) {
-          }
           return (
             <tbody key={i}>
               <tr>
@@ -26,13 +24,12 @@ const UserDescription = ({ userList }: { userList: UserListInterface }) => {
                         : "Not Available"}
                     </Info>
                   ) : (
-                    <input type="text" id={arr[0]} />
+                    <input type="text" id={arr[0]} value={arr[1] ?? ""} />
                   )}
                 </td>
                 <td>
                   {arr[0].localeCompare("dateOfBirth") === 0 ||
-                  (arr[0].localeCompare("nationality") === 0 &&
-                    arr[0].localeCompare("trainingList") !== 0) ? (
+                  arr[0].localeCompare("nationality") === 0 ? (
                     <Button onClick={() => setEdit(!isEdit)}>
                       <FaEdit />
                     </Button>
