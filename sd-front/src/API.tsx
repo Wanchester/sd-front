@@ -1,17 +1,25 @@
-import axios from "axios";
-const BASE_URL = "http://54.210.74.109/api/";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
+const BASE_URL = "http://54.210.74.109/api";
 
-const defaultConfig = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+axios.defaults.baseURL = BASE_URL;
+axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+axios.defaults.headers.post["Access-Control-Access-Origin"] = "*";
 
 const apiMethods = {
-  getPlayer: async (userID: { userID: string }) => {
-    const endpoint = `${BASE_URL}/profile/${userID}`;
-    return (await fetch(endpoint)).json();
+  getPlayer: async (userID: string) => {
+    return axios
+      .get("/profile/p_jbk", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
   },
 };
 
