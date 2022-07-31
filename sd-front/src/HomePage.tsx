@@ -1,8 +1,9 @@
 import { Container, Row, Button, Col } from "react-bootstrap";
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
-import TestImage from "./image/test.jpeg";
+// import TestImage from "./image/test.jpeg";
 import Teams from "./components/teams/Teams";
+import apiMethods from "./API";
 
 export interface UserListInterface {
   user: {
@@ -30,6 +31,13 @@ const HomePage = () => {
       teamName: "TeamName here",
     },
   };
+  const player = apiMethods.getPlayer("p_warren");
+  // apiMethods
+  //   .createLocationApi()
+  //   .then((data) => {
+  //     console.log(data.data, 123456789);
+  //   })
+  //   .catch((err) => console.log(err, 98765));
   return (
     <Container fluid>
       <Row>
@@ -39,7 +47,7 @@ const HomePage = () => {
       <Row>
         <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
           <div className="w-100 border-end">
-            <Avatar imageLink={TestImage} />
+            {/* <Avatar imageLink={TestImage} /> */}
           </div>
         </Col>
         <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>
