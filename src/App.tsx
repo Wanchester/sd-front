@@ -1,7 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { GlobalStyle } from "./GlobalStyle";
+import HomePage from "./HomePage";
+import LogInPage from "./LogInPage";
+const App = () => {
+  return (
+    <Fragment>
+      <HomePage />
+      {/* <LogInPage /> */}
+      <GlobalStyle />
+    </Fragment>
+  );
+};
 
-export default class App extends React.Component {
-  render() {
-    return <></>;
-  }
-}
+export default App;
