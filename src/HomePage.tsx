@@ -27,7 +27,6 @@ const HomePage = () => {
         </Col>
         <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>
           <UserDescription userList={player} />
-          {/* <UserDescription /> */}
         </Col>
         <Col
           className="d-flex flex-direction: column flex-grow-1 justify-content-right align-self-end"
