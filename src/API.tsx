@@ -19,6 +19,10 @@ export interface ProfileResponse {
   }[];
 }
 
+export interface Credential {
+  username: string;
+  password: string;
+}
 const apiMethods = {
   getPlayer: async (userID: string) => {
     return axios
@@ -34,6 +38,20 @@ const apiMethods = {
       .post(`/api/profile/${player.username}`, JSON.stringify(player))
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
+  },
+  //log in log out system
+  logIn: async (credetial: Credential) => {
+    return axios
+      .post("", JSON.stringify(credetial))
+      .then((response) => {
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("isLogin", "true");
+      })
+      .catch((err) => console.log(err));
+  },
+  logOut: () => {
+    localStorage.setItem("isLogin", "false");
+    localStorage.removeItem("userName");
   },
 };
 

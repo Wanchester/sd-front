@@ -10,7 +10,7 @@ const UserDescription = ({
   userList: Promise<ProfileResponse>;
 }) => {
   const [isEdit, setEdit] = useState(true);
-  const [nation, setNationality] = useState("");
+
   const [userListVal, setUserListVal] = useState({
     username: "N/A",
     name: "N/A",
@@ -23,13 +23,19 @@ const UserDescription = ({
     teams: [],
     trainingSessions: [],
   } as ProfileResponse);
+  const [nation, setNationality] = useState(userListVal.nationality);
 
   userList.then((newUserListVal) => {
     setUserListVal(newUserListVal);
   });
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setNationality(event.currentTarget.value);
+    const currentNation = event.currentTarget.value;
+    if (currentNation) {
+      setNationality(currentNation);
+    } else {
+      setNationality(userListVal.nationality);
+    }
   };
   const submitChange = () => {
     const newChange: ProfileResponse = { ...userListVal, nationality: nation };

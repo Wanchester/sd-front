@@ -3,15 +3,20 @@ import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 
 import Teams from "./components/teams/Teams";
-import apiMethods, { ProfileResponse } from "./API";
+import apiMethods from "./API";
 
-const HomePage = () => {
+const HomePage = ({ userName }: { userName?: string }) => {
   const teamsList = {
     team: {
       teamName: "TeamName here",
     },
   };
-  const player = apiMethods.getPlayer("p_warren");
+
+  //need better solutions
+  let player = apiMethods.getPlayer("");
+  if (userName) {
+    player = apiMethods.getPlayer(userName);
+  }
 
   return (
     <Container fluid>

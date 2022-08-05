@@ -1,9 +1,23 @@
+import react, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import apiMethods, { Credential } from "./API";
 const LogInPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = () => {
+    const credential: Credential = {
+      username: username,
+      password: password,
+    };
+
+    apiMethods.logIn(credential);
+  };
+
   return (
     <Container>
       <Row className="justify-content-center">
@@ -11,7 +25,7 @@ const LogInPage = () => {
           <Card>
             <div className="card-header">Log in</div>
             <div className="card-body">
-              <Form>
+              <Form typeof="submit">
                 <Row className="form-group">
                   <label
                     htmlFor="username"
@@ -24,7 +38,8 @@ const LogInPage = () => {
                       type="text"
                       id="username"
                       className="form-control"
-                      name="email-address"
+                      name="username"
+                      onChange={(e) => setUsername(e.currentTarget.value)}
                     />
                   </div>
                 </Row>
@@ -37,15 +52,20 @@ const LogInPage = () => {
                   </label>
                   <div className="col-md-6">
                     <input
-                      type="text"
+                      type="password"
                       id="password"
                       className="form-control"
-                      name="email-address"
+                      name="password"
+                      onChange={(e) => setPassword(e.currentTarget.value)}
                     />
                   </div>
                   <div className="col-md-6 offset-md-4">
-                    <Button type="submit" className="btn btn-primary">
-                      Register
+                    <Button
+                      type="submit"
+                      className="btn btn-primary"
+                      onSubmit={() => login()}
+                    >
+                      Log In
                     </Button>
                     <a href="#" className="btn btn-link">
                       Forgot Your Password?
