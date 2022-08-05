@@ -1,10 +1,6 @@
-import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import { TeamName } from "./Teams.styles";
-// import TestImage from "../../image/test.jpg";
-import TeamAvatar from "./TeamAvatar";
 const Teams = ({ teamsList }: { teamsList: any }) => {
-  const [isEdit, setEdit] = useState(true);
   return (
     <Table>
       <tbody>

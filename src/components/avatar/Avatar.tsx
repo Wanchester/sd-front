@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Image, Wrapper } from "./Avatar.styles";
 const Avatar = ({ imageLink }: { imageLink: string }) => {
   const avatarRef = useRef<HTMLDivElement>(null);

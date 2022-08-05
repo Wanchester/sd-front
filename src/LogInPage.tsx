@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Info, Context } from "./UserDescription.styles";
 import { FaEdit } from "react-icons/fa";
-import { ProfileResponse } from "../../API";
-import apiMethods from "../../API";
+import apiMethods, { ProfileResponse } from "../../API";
 const UserDescription = ({
   userList,
 }: {
@@ -25,8 +24,10 @@ const UserDescription = ({
   } as ProfileResponse);
   const [nation, setNationality] = useState(userListVal.nationality);
 
-  userList.then((newUserListVal) => {
-    setUserListVal(newUserListVal);
+  useEffect(() => {
+    userList.then((newUserListVal) => {
+      setUserListVal(newUserListVal);
+    });
   });
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
