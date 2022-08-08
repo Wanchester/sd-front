@@ -39,7 +39,7 @@ const UserDescription = ({
     }
   };
   const submitChange = () => {
-    const newChange: ProfileResponse = { ...userListVal, nationality: nation };
+    const newChange = { nationality: nation };
     apiMethods.postPlayer(newChange);
     setEdit(!isEdit);
   };

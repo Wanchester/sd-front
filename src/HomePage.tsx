@@ -1,9 +1,9 @@
 import { Container, Row, Button, Col } from "react-bootstrap";
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
-
+import { useState } from "react";
 import Teams from "./components/teams/Teams";
-import apiMethods from "./API";
+import apiMethods, { ProfileResponse } from "./API";
 
 const HomePage = ({ userName }: { userName?: string }) => {
   const teamsList = {
@@ -12,11 +12,7 @@ const HomePage = ({ userName }: { userName?: string }) => {
     },
   };
 
-  //need better solutions
-  let player = apiMethods.getPlayer("");
-  if (userName) {
-    player = apiMethods.getPlayer(userName);
-  }
+  const player = apiMethods.getPlayer(userName || "");
 
   return (
     <Container fluid>

@@ -1,21 +1,17 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { GlobalStyle } from "./GlobalStyle";
 import HomePage from "./HomePage";
 import LogInPage from "./LogInPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import apiMethods from "./API";
 const App = () => {
-  if (localStorage.getItem("isLogin") === "true") {
-    return <HomePage userName={localStorage.getItem("userName") || ""} />;
-  }
+  const [loggedIn, setLoggedIn] = useState(false as string | false);
+  apiMethods.hasUserAlreadyLoggedIn().then((userName) => setLoggedIn(userName));
+
   return (
     <Fragment>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LogInPage />} />
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </BrowserRouter>
+      {loggedIn !== false ? <HomePage userName={loggedIn} /> : <LogInPage />}
       <GlobalStyle />
     </Fragment>
   );

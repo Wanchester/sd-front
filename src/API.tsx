@@ -33,25 +33,42 @@ const apiMethods = {
       })
       .then((response) => response.data as ProfileResponse);
   },
-  postPlayer: async (player: ProfileResponse) => {
+  postPlayer: async (player: Partial<ProfileResponse>) => {
     return axios
-      .post(`/api/profile/${player.username}`, JSON.stringify(player))
+      .put(`/api/profile/${player.username}`, player)
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
   },
   //log in log out system
-  logIn: async (credetial: Credential) => {
-    return axios
-      .post("", JSON.stringify(credetial))
-      .then((response) => {
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("isLogin", "true");
-      })
-      .catch((err) => console.log(err));
+  logIn: async (credential: Credential) => {
+    return axios.post("/api/login", credential).then((response) => {
+      if (response.status === 200) {
+        // logged in successfully
+        const username = response.data.username as string;
+        return username;
+      } else {
+        // failed to log in
+        const error = response.data.error as string;
+        return error;
+      }
+    });
   },
-  logOut: () => {
-    localStorage.setItem("isLogin", "false");
-    localStorage.removeItem("userName");
+  hasUserAlreadyLoggedIn: async () => {
+    return axios.get("/api/login").then((response) => {
+      if (response.status === 200) {
+        // the user has logged in
+        const loggedIn = response.data.loggedIn as string;
+        return loggedIn;
+      } else {
+        // the user has not logged in
+        return false;
+      }
+    });
+  },
+  logOut: async () => {
+    return axios.post("/api/logout").then(() => {
+      window.location.reload();
+    });
   },
 };
 

@@ -1,21 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import apiMethods, { Credential } from "./API";
+
 const LogInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const login = () => {
+  const login = async () => {
     const credential: Credential = {
       username: username,
       password: password,
     };
 
-    apiMethods.logIn(credential);
+    await apiMethods.logIn(credential);
+    window.location.reload();
   };
 
   return (
