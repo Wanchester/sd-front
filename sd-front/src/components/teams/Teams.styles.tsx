@@ -8,7 +8,7 @@ export const TeamName = styled.p`
   text-display: center;
   margin: 0;
   background-color: #11111b;
-  border-radius: 50px;
+  border-radius: 10px;
   text-align: center;
   height: 220px;
   font-size: large;

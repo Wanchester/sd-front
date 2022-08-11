@@ -4,6 +4,9 @@ import UserDescription from "./components/userDescription/UserDescription";
 // import TestImage from "./image/test.jpeg";
 import Teams from "./components/teams/Teams";
 import apiMethods from "./API";
+import Sidebar from "./components/Nav/Sidebar";
+import { Link } from "react-router-dom";
+import TrainingSession from "./components/trainingSession/TrainingSessions";
 
 export interface UserListInterface {
   user: {
@@ -15,6 +18,29 @@ export interface UserListInterface {
     weight: number;
   };
 }
+export interface Interface1 {
+  user: {
+    username: string;
+    name: string;
+    email: string;
+    dob: string;
+    nationality: string;
+    height: number;
+    weight: number;
+    role: string;
+    teams: string[];
+    trainingSessions: TrainingSession[];
+  };
+}
+
+export interface TrainingSession {
+  sessionName: string;
+  sessionDate: string;
+  sessionTime: string;
+  teamName: string;
+  duration: string;
+}
+
 const HomePage = () => {
   const userList = {
     user: {
@@ -31,6 +57,42 @@ const HomePage = () => {
       teamName: "TeamName here",
     },
   };
+  const interfaceP = {
+    user: {
+      username: "p_warren",
+      name: "Warren",
+      email: "warren@gmail.com",
+      dob: "02051970",
+      nationality: "Vn",
+      height: 100,
+      weight: 100,
+      role: "player",
+      teams: ["Team Wanchester", "TeamBit"],
+      trainingSessions: [
+        {
+          sessionName: "Cig",
+          sessionDate: "25-07-2022",
+          sessionTime: "16:02",
+          teamName: "TeamBit",
+          duration: "03:41:35",
+        },
+        {
+          sessionName: "Holy",
+          sessionDate: "25-07-2023",
+          sessionTime: "16:02",
+          teamName: "TeamBit",
+          duration: "01:12:48",
+        },
+        {
+          sessionName: "Ketchup",
+          sessionDate: "25-07-2024",
+          sessionTime: "16:02",
+          teamName: "Team Wanchester",
+          duration: "03:50:30",
+        },
+      ],
+    },
+  };
   const player = apiMethods.getPlayer("p_warren");
   // apiMethods
   //   .createLocationApi()
@@ -39,10 +101,9 @@ const HomePage = () => {
   //   })
   //   .catch((err) => console.log(err, 98765));
   return (
-    <Container fluid>
+    <Container fluid p-0>
       <Row>
-        <h1 className="py-4 mb-0">Homepage</h1>
-        <hr />
+        <h1>Homepage</h1>
       </Row>
       <Row>
         <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
@@ -60,7 +121,9 @@ const HomePage = () => {
           lg={2}
           xl={3}
         >
-          <Button>My statistics</Button>
+          <Link to="/StatsPage">
+            <Button>My statistics</Button>
+          </Link>
         </Col>
       </Row>
       <Row className="pt-4">
@@ -72,6 +135,15 @@ const HomePage = () => {
         <Col md={{ span: 7, offset: 2 }}>
           <Teams teamsList={teamsList} />
         </Col>
+      </Row>
+      <Container>
+        <Row className="color: #686868;">
+          <Col><h2>Session name</h2></Col>
+          <Col><h2>Session date</h2></Col>
+        </Row>
+      </Container>
+      <Row>
+        <TrainingSession interfaceP={interfaceP} />
       </Row>
     </Container>
   );
