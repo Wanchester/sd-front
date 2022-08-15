@@ -1,15 +1,13 @@
 import { Container, Row, Button, Col } from "react-bootstrap";
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import Teams from "./components/teams/Teams";
 import apiMethods, { ProfileResponse } from "./API";
 
 const HomePage = ({ userName }: { userName?: string }) => {
   const teamsList = {
-    team: {
-      teamName: "TeamName here",
-    },
+    team: ["TeamName here", "Test"],
   };
 
   const player = apiMethods.getPlayer(userName || "");
@@ -36,7 +34,9 @@ const HomePage = ({ userName }: { userName?: string }) => {
           lg={2}
           xl={3}
         >
-          <Button>My statistics</Button>
+          <Link to="/statistic">
+            <Button>My statistics</Button>
+          </Link>
         </Col>
       </Row>
       <Row className="pt-4">
