@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
@@ -9,14 +9,22 @@ import apiMethods, { Credential } from "./API";
 const LogInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loggingIn, setLoggingIn] = useState(false);
   const login = async () => {
-    const credential: Credential = {
-      username: username,
-      password: password,
-    };
+    if (!loggingIn) {
+      const credential: Credential = {
+        username: username,
+        password: password,
+      };
 
-    await apiMethods.logIn(credential);
-    window.location.reload();
+      setLoggingIn(true);
+      try {
+        await apiMethods.logIn(credential);
+        window.location.reload();
+      } catch (err) {
+        setLoggingIn(false);
+      }
+    }
   };
 
   return (
@@ -26,8 +34,13 @@ const LogInPage = () => {
           <Card>
             <div className="card-header">Log in</div>
             <div className="card-body">
-              <Form typeof="submit">
-                <Row className="form-group">
+              <Form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  login();
+                }}
+              >
+                <Row className="form-group mb-2">
                   <label
                     htmlFor="username"
                     className="col-md-4 col-form-label text-md-right"
@@ -44,7 +57,7 @@ const LogInPage = () => {
                     />
                   </div>
                 </Row>
-                <Row className="form-group">
+                <Row className="form-group mb-2">
                   <label
                     htmlFor="password"
                     className="col-md-4 col-form-label text-md-right"
@@ -60,15 +73,15 @@ const LogInPage = () => {
                       onChange={(e) => setPassword(e.currentTarget.value)}
                     />
                   </div>
-                  <div className="col-md-6 offset-md-4">
+                  <div className="col-md-6 offset-md-4 mt-2">
                     <Button
                       type="submit"
                       className="btn btn-primary"
-                      onSubmit={() => login()}
+                      disabled={loggingIn}
                     >
-                      Log In
+                      {loggingIn ? "Logging In" : "Log In"}
                     </Button>
-                    <a href="#" className="btn btn-link">
+                    <a href="#" className="btn btn-link px-2 px-md-0 px-lg-2">
                       Forgot Your Password?
                     </a>
                   </div>

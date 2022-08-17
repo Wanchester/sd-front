@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { GlobalStyle } from "./GlobalStyle";
 import HomePage from "./HomePage";
@@ -8,7 +8,7 @@ import apiMethods from "./API";
 import StatisticPage from "./StatisticPage";
 import TeamPage from "./TeamPage";
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(true as string | false);
+  const [loggedIn, setLoggedIn] = useState(false as string | false);
   apiMethods.hasUserAlreadyLoggedIn().then((userName) => setLoggedIn(userName));
 
   return (
