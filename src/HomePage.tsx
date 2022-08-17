@@ -3,7 +3,7 @@ import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import { Link } from "react-router-dom";
 import Teams from "./components/teams/Teams";
-import apiMethods, { ProfileResponse } from "./API";
+import apiMethods from "./API";
 
 const HomePage = ({ userName }: { userName?: string }) => {
   const teamsList = {
@@ -14,6 +14,18 @@ const HomePage = ({ userName }: { userName?: string }) => {
 
   return (
     <Container fluid>
+      <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        <a
+          href="#"
+          onClick={async (event) => {
+            event.preventDefault();
+            await apiMethods.logOut();
+            window.location.reload();
+          }}
+        >
+          Logout
+        </a>
+      </div>
       <Row>
         <h1 className="py-4 mb-0">Homepage</h1>
         <hr />
