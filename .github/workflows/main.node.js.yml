@@ -23,11 +23,6 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run build
-    - run: npm test
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Push build for EC2
       uses: cpina/github-action-push-to-another-repository@main
       env:
