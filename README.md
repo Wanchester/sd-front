@@ -2,7 +2,7 @@
 
 [![Build status](https://github.com/Wanchester/sd-front/actions/workflows/node.js.yml/badge.svg)](https://github.com/Wanchester/sd-front/actions/workflows/node.js.yml) [![Coverage Status](https://coveralls.io/repos/github/Wanchester/sd-front/badge.svg?branch=main)](https://coveralls.io/github/Wanchester/sd-front?branch=main)
 
-To start the development environment, use `npm start` or `npm run start`.
+To start the development environment, use `npm start` or `npm run start`. Note that all activities happen on `http://localhost:5047`.
 
 To create a production build, use `npm run build`.
 
