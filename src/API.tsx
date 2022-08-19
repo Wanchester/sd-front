@@ -49,35 +49,39 @@ const apiMethods = {
       .catch((err) => console.log(err));
   },
   //log in log out system
-  logIn: async (credential: Credential) => {
-    return axios.post("/api/login", credential).then((response) => {
-      if (response.status === 200) {
+  logIn: async (credential: Credential): Promise<string | false> => {
+    return axios.post("/api/login", credential).then(
+      (response) => {
         // logged in successfully
         const username = response.data.username as string;
         return username;
-      } else {
+      },
+      () => {
         // failed to log in
-        const error = response.data.error as string;
-        return error;
+        return false;
       }
-    });
+    );
   },
-  hasUserAlreadyLoggedIn: async () => {
-    return axios.get("/api/login").then((response) => {
-      if (response.status === 200) {
+  hasUserAlreadyLoggedIn: async (): Promise<string | false> => {
+    return axios.get("/api/login").then(
+      (response) => {
         // the user has logged in
         const loggedIn = response.data.loggedIn as string;
         return loggedIn;
-      } else {
+      },
+      () => {
         // the user has not logged in
         return false;
       }
-    });
+    );
   },
   logOut: async () => {
-    return axios.post("/api/logout").then(() => {
-      window.location.reload();
-    });
+    return axios.post("/api/logout").then(
+      () => {
+        window.location.reload();
+      },
+      () => {}
+    );
   },
 };
 
