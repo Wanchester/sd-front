@@ -1,24 +1,23 @@
 import Table from "react-bootstrap/Table";
 import { TeamName } from "./Teams.styles";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TeamAvatar from "./TeamAvatar";
 import { Link } from "react-router-dom";
-const Teams = ({ teamsList }: { teamsList: any }) => {
+
+const Teams = ({ teamsList }: { teamsList: string[] }) => {
   return (
     <Table>
       <tbody>
         {teamsList &&
-          Object.keys(teamsList.team).map((key, i) => {
+          teamsList.map((item, i) => {
             return (
-              <Link to={`/team/${teamsList.team[key]}`}>
+              <Link to={`/team/${item}`}>
                 <td key={i}>
                   <tr>
                     <TeamName>
                       <TeamAvatar imageLink={"image/test.jpg"} />
-                      {teamsList.team[key]
-                        ? teamsList.team[key]
-                        : "Not Available"}
+                      {item ? item : "Not Available"}
                     </TeamName>
                   </tr>
                 </td>

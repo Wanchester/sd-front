@@ -1,17 +1,24 @@
 import { Container, Row, Button, Col } from "react-bootstrap";
+
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
-import { Link } from "react-router-dom";
 import Teams from "./components/teams/Teams";
+import TrainingSession from "./components/trainingSession/TrainingSession";
+
 import apiMethods from "./API";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const HomePage = ({ userName }: { userName?: string }) => {
-  const teamsList = {
-    team: ["TeamName here", "Test"],
-  };
+const HomePage = () => {
+  const [teamsList, setTeamList] = useState(["TeamName here", "Test"]);
 
-  const player = apiMethods.getPlayer(userName || "");
+  const player = apiMethods.getCurrentPlayer();
 
+  useEffect(() => {
+    player.then((user) => {
+      setTeamList(user.teams);
+    });
+  });
   return (
     <Container fluid>
       <div style={{ position: "absolute", top: "10px", right: "10px" }}>
@@ -59,6 +66,11 @@ const HomePage = ({ userName }: { userName?: string }) => {
       <Row>
         <Col md={{ span: 7, offset: 2 }}>
           <Teams teamsList={teamsList} />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{ span: 7, offset: 2 }}>
+          <TrainingSession userList={player} />
         </Col>
       </Row>
     </Container>
