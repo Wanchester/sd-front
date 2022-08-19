@@ -3,39 +3,17 @@ import { Table, Button } from "react-bootstrap";
 import { Info, Context } from "./UserDescription.styles";
 import { FaEdit } from "react-icons/fa";
 import apiMethods, { ProfileResponse } from "../../API";
-const UserDescription = ({
-  userList,
-}: {
-  userList: Promise<ProfileResponse>;
-}) => {
+const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
   const [isEdit, setEdit] = useState(true);
 
-  const [userListVal, setUserListVal] = useState({
-    username: "N/A",
-    name: "N/A",
-    email: "N/A",
-    dob: "01-01-1970",
-    nationality: "N/A",
-    height: 0,
-    weight: 0,
-    role: "player",
-    teams: [],
-    trainingSessions: [],
-  } as ProfileResponse);
-  const [nation, setNationality] = useState(userListVal.nationality);
-
-  useEffect(() => {
-    userList.then((newUserListVal) => {
-      setUserListVal(newUserListVal);
-    });
-  });
+  const [nation, setNationality] = useState(userList.nationality);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const currentNation = event.currentTarget.value;
     if (currentNation) {
       setNationality(currentNation);
     } else {
-      setNationality(userListVal.nationality);
+      setNationality(userList.nationality);
     }
   };
   const submitChange = () => {
@@ -51,8 +29,8 @@ const UserDescription = ({
         variant="dark"
         className="table-condensed mb-0"
       >
-        {userListVal &&
-          Object.entries(userListVal).map((arr, i) => {
+        {userList &&
+          Object.entries(userList).map((arr, i) => {
             return (
               <tbody key={i}>
                 {arr[0] !== "teams" && arr[0] !== "trainingSessions" ? (

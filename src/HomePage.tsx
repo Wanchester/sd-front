@@ -5,20 +5,12 @@ import UserDescription from "./components/userDescription/UserDescription";
 import Teams from "./components/teams/Teams";
 import TrainingSession from "./components/trainingSession/TrainingSession";
 
-import apiMethods from "./API";
+import apiMethods, { ProfileResponse } from "./API";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const HomePage = () => {
-  const [teamsList, setTeamList] = useState(["TeamName here", "Test"]);
-
-  const player = apiMethods.getCurrentPlayer();
-
-  useEffect(() => {
-    player.then((user) => {
-      setTeamList(user.teams);
-    });
-  });
+const HomePage = ({ player }: { player: ProfileResponse }) => {
+  const teamsList = player.teams;
   return (
     <Container fluid>
       <div style={{ position: "absolute", top: "10px", right: "10px" }}>
@@ -66,6 +58,11 @@ const HomePage = () => {
       <Row>
         <Col md={{ span: 7, offset: 2 }}>
           <Teams teamsList={teamsList} />
+        </Col>
+      </Row>
+      <Row className="pt-4">
+        <Col md={{ span: 6, offset: 2 }}>
+          <h2>Training Session List</h2>
         </Col>
       </Row>
       <Row>

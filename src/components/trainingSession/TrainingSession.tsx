@@ -1,29 +1,8 @@
 import Table from "react-bootstrap/Table";
-
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProfileResponse } from "../../API";
 
-const TrainingSession = ({
-  userList,
-}: {
-  userList: Promise<ProfileResponse>;
-}) => {
-  const [trainingList, setTrainingList] = useState([
-    {
-      sessionName: "null",
-      sessionStart: "null",
-      sessionStop: "null",
-      teamName: "null",
-      duration: "null",
-    },
-  ]);
-
-  useEffect(() => {
-    userList.then((newUserListVal) => {
-      setTrainingList(newUserListVal.trainingSessions);
-    });
-  });
+const TrainingSession = ({ userList }: { userList: ProfileResponse }) => {
   return (
     <Table responsive bordered variant="dark" className="table-condensed mb-0">
       <thead>
@@ -33,12 +12,14 @@ const TrainingSession = ({
         <td>Team Name</td>
         <td>Session Duration</td>
       </thead>
-      {trainingList &&
-        trainingList.map((session) => {
+      {userList.trainingSessions &&
+        userList.trainingSessions.map((session) => {
           return (
             <>
               <tbody>
-                <Link to={`/session/${session.sessionName}`}>
+                <Link
+                  to={`/session/${encodeURIComponent(session.sessionName)}`}
+                >
                   <td>{session.sessionName}</td>
                 </Link>
                 <td>{session.sessionStart}</td>
