@@ -7,7 +7,6 @@ import TrainingSession from "./components/trainingSession/TrainingSession";
 
 import apiMethods, { ProfileResponse } from "./API";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const HomePage = ({ player }: { player: ProfileResponse }) => {
   const teamsList = player.teams;

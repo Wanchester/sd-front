@@ -1,7 +1,5 @@
-import Table from "react-bootstrap/Table";
+import { Table } from "react-bootstrap";
 import { TeamName } from "./Teams.styles";
-
-import React, { useEffect, useState } from "react";
 import TeamAvatar from "./TeamAvatar";
 import { Link } from "react-router-dom";
 
