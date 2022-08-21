@@ -23,6 +23,9 @@ export interface Credential {
   username: string;
   password: string;
 }
+export interface PlayerList {
+  players: { name: string; username: string }[];
+}
 const apiMethods = {
   getCurrentPlayer: async () => {
     return axios
@@ -47,6 +50,18 @@ const apiMethods = {
       .put(`/api/profile`, player)
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
+  },
+  getTeam: async (team: string | undefined) => {
+    return axios
+      .get(`/api/team`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          teamName: team,
+        },
+      })
+      .then((response) => response.data as PlayerList);
   },
   //log in log out system
   logIn: async (credential: Credential): Promise<string | false> => {

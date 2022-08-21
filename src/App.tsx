@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -15,13 +15,15 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(
     null as null | ProfileResponse | false
   );
-  apiMethods.hasUserAlreadyLoggedIn().then(async (userName) => {
-    if (userName) {
-      setLoggedIn(await apiMethods.getCurrentPlayer());
-    } else {
-      setLoggedIn(false);
-    }
-  });
+  useEffect(() => {
+    apiMethods.hasUserAlreadyLoggedIn().then(async (userName) => {
+      if (userName) {
+        setLoggedIn(await apiMethods.getCurrentPlayer());
+      } else {
+        setLoggedIn(false);
+      }
+    });
+  }, []);
 
   return (
     <Fragment>
