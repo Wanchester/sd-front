@@ -53,7 +53,7 @@ const apiMethods = {
       })
       .then((response) => response.data as ProfileResponse);
   },
-  postPlayer: async (player: Partial<ProfileResponse>) => {
+  putPlayer: async (player: Partial<ProfileResponse>) => {
     return axios
       .put(`/api/profile`, player)
       .then((response) => console.log(response))

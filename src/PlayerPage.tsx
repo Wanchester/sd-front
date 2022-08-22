@@ -18,7 +18,6 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
       apiMethods
         .getPlayer(playerName)
         .then((p) => {
-          console.log(p);
           setPlayer(p);
         })
         .catch((e) => {
@@ -36,7 +35,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           <Row>
             <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
               <div className="w-100 border-end">
-                <Avatar imageLink="image/test.jpeg" />
+                <Avatar imageLink="image/player.jpeg" />
               </div>
             </Col>
             <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>

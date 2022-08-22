@@ -7,21 +7,16 @@ const SessionPage = () => {
     null as TrainingSession | null
   );
   useEffect(() => {
-    console.log(1);
-    console.log(sessionName);
-    console.log(team);
     if (sessionName && team)
       apiMethods
         .getTrainingSession(sessionName, team)
         .then((session) => {
-          console.log(2);
           setTrainingSession(session);
         })
         .catch((e) => {
           console.log(e);
         });
   }, [sessionName, team]);
-  console.log(3);
   return (
     <>
       {trainingSession && (
