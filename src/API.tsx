@@ -26,7 +26,15 @@ export interface Credential {
 export interface PlayerList {
   players: { name: string; username: string }[];
 }
+export interface TrainingSession {
+  sessionName: string;
+  sessionStart: string;
+  sessionStop: string;
+  teamName: string;
+  duration: string;
+}
 const apiMethods = {
+  //player
   getCurrentPlayer: async () => {
     return axios
       .get(`/api/profile`, {
@@ -51,6 +59,24 @@ const apiMethods = {
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
   },
+  //training session
+  getTrainingSession: async (sessionName: string, teamName: string) => {
+    return axios
+      .get("/api/trainingSessions", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          fullStats: true,
+          teamName: teamName,
+          sessionName: sessionName,
+        },
+      })
+      .then((response) => {
+        return response.data as TrainingSession;
+      });
+  },
+  //team
   getTeam: async (team: string | undefined) => {
     return axios
       .get(`/api/team`, {

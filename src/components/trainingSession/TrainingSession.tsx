@@ -18,7 +18,9 @@ const TrainingSession = ({ userList }: { userList: ProfileResponse }) => {
             <>
               <tbody>
                 <Link
-                  to={`/session/${encodeURIComponent(session.sessionName)}`}
+                  to={`/session/${encodeURIComponent(session.sessionName)}/${
+                    session.teamName
+                  }`}
                 >
                   <td>{session.sessionName}</td>
                 </Link>

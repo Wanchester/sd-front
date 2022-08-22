@@ -8,7 +8,7 @@ import LogInPage from "./LogInPage";
 import StatisticPage from "./StatisticPage";
 import TeamPage from "./TeamPage";
 import SessionPage from "./SessionPage";
-
+import PlayerPage from "./PlayerPage";
 import apiMethods, { ProfileResponse } from "./API";
 
 const App = () => {
@@ -33,9 +33,15 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage player={loggedIn} />} />
-            {/* <Route path="/player/:userName" /> */}
+            <Route
+              path="/player/:playerName"
+              element={<PlayerPage user={loggedIn} />}
+            />
             <Route path="/team/:teamName" element={<TeamPage />} />
-            <Route path="/session/:sessionName" element={<SessionPage />} />
+            <Route
+              path="/session/:sessionName/:team"
+              element={<SessionPage />}
+            />
             <Route path="/statistic" element={<StatisticPage />} />
             <Route path="*" />
           </Routes>
