@@ -9,7 +9,7 @@ type SliderItemProps = {
   callbackOut: () => void;
   slideMargin: number;
   visibleSlides: number;
-  children: any;
+  children: any[];
 };
 
 const SliderItem: React.FC<SliderItemProps> = ({

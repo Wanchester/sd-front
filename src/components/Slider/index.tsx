@@ -3,7 +3,7 @@ import SliderItem from "./SliderItem";
 import { StyledSliderWrapper, StyledSlider } from "./SliderStyles";
 
 type SliderProps = {
-  children?: any;
+  children?: any[];
   zoomFactor: number;
   slideMargin: number;
   maxVisibleSlides: number;
@@ -28,17 +28,20 @@ const Slider: React.FC<SliderProps> = ({
   const [transformValue, setTransformValue] = useState(`-${zoomFactor / 2}%`);
   const [scrollSize, setScrollSize] = useState(0);
 
-  const sliderRef = useRef<HTMLElement>(null!);
+  const sliderRef = useRef<HTMLElement>(null);
 
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
 
-  const totalPages: number = Math.ceil(children.length / visibleSlides) - 1;
+  const totalPages: number =
+    Math.ceil((children ?? []).length / visibleSlides) - 1;
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       setScrollSize(entries[0].contentRect.width);
     });
-    resizeObserver.observe(sliderRef.current);
+    if (sliderRef.current) {
+      resizeObserver.observe(sliderRef.current);
+    }
   }, [sliderRef]);
 
   useEffect(() => {
@@ -91,7 +94,7 @@ const Slider: React.FC<SliderProps> = ({
         pageTransition={pageTransition}
         ref={sliderRef}
       >
-        {children.map((child: any, i: any) => (
+        {children?.map((child, i) => (
           <SliderItem
             key={i}
             slideMargin={slideMargin}
