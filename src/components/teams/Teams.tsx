@@ -14,7 +14,7 @@ const Teams = ({ teamsList }: { teamsList: string[] }) => {
                 <td key={i}>
                   <tr>
                     <TeamName>
-                      <TeamAvatar imageLink={"image/test.jpg"} />
+                      <TeamAvatar imageLink={"image/team.jpg"} />
                       {item ? item : "Not Available"}
                     </TeamName>
                   </tr>

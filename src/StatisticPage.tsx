@@ -1,5 +1,13 @@
+import Sidebar from "./components/Nav/Sidebar";
+import { Container, Row } from "react-bootstrap";
 const StatisticPage = () => {
-  return <h1>This is statistic page</h1>;
+  return (
+    <Container fluid p-0>
+      <Row>
+        <Sidebar />
+      </Row>
+    </Container>
+  );
 };
 
 export default StatisticPage;

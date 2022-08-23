@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Info, Context } from "./UserDescription.styles";
 import { FaEdit } from "react-icons/fa";
@@ -6,19 +6,26 @@ import apiMethods, { ProfileResponse } from "../../API";
 const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
   const [isEdit, setEdit] = useState(true);
 
-  const [nation, setNationality] = useState(userList.nationality);
+  const [change, setChange] = useState({
+    nationality: userList.nationality,
+    height: userList.height,
+    weight: userList.weight,
+  });
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const currentNation = event.currentTarget.value;
-    if (currentNation) {
-      setNationality(currentNation);
-    } else {
-      setNationality(userList.nationality);
-    }
+  const handleChange = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setChange((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
   };
   const submitChange = () => {
-    const newChange = { nationality: nation };
-    apiMethods.postPlayer(newChange);
+    apiMethods.putPlayer(change);
     setEdit(!isEdit);
   };
   return (
@@ -47,7 +54,9 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
                         </Info>
                       ) : (
                         <>
-                          {arr[0] === "nationality" ? (
+                          {arr[0] === "nationality" ||
+                          arr[0] === "height" ||
+                          arr[0] === "weight" ? (
                             <input
                               type="text"
                               id={arr[0]}
@@ -79,6 +88,3 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
   );
 };
 export default UserDescription;
-<form action="">
-  <input type="text" />
-</form>;
