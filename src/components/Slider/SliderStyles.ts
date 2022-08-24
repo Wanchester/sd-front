@@ -12,7 +12,6 @@ type SliderProps = {
   zoomFactor: number;
   slideMargin: number;
   pageTransition: number;
-  ref: any;
 };
 
 export const StyledSliderWrapper = styled.div<SliderWrapperProps>`

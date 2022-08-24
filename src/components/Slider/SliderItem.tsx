@@ -9,7 +9,7 @@ type SliderItemProps = {
   callbackOut: () => void;
   slideMargin: number;
   visibleSlides: number;
-  children: any[];
+  children: any; // eslint-disable-line
 };
 
 const SliderItem: React.FC<SliderItemProps> = ({
