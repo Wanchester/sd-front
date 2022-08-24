@@ -3,7 +3,7 @@ import SliderItem from "./SliderItem";
 import { StyledSliderWrapper, StyledSlider } from "./SliderStyles";
 
 type SliderProps = {
-  children?: any[];
+  children?: any[]; // eslint-disable-line
   zoomFactor: number;
   slideMargin: number;
   maxVisibleSlides: number;
@@ -28,7 +28,7 @@ const Slider: React.FC<SliderProps> = ({
   const [transformValue, setTransformValue] = useState(`-${zoomFactor / 2}%`);
   const [scrollSize, setScrollSize] = useState(0);
 
-  const sliderRef = useRef<HTMLElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
 
