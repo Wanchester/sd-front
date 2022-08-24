@@ -10,6 +10,7 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
     nationality: userList.nationality,
     height: userList.height,
     weight: userList.weight,
+    dob: userList.dob,
   });
 
   const handleChange = (
@@ -56,7 +57,8 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
                         <>
                           {arr[0] === "nationality" ||
                           arr[0] === "height" ||
-                          arr[0] === "weight" ? (
+                          arr[0] === "weight" ||
+                          arr[0] === "dob" ? (
                             <input
                               type="text"
                               id={arr[0]}

@@ -19,7 +19,7 @@ const SessionPage = () => {
   }, [sessionName, team]);
   return (
     <>
-      {trainingSession && (
+      {trainingSession ? (
         <>
           <h1>{trainingSession.sessionName}</h1>
           <h2>{trainingSession.sessionStart}</h2>
@@ -27,6 +27,8 @@ const SessionPage = () => {
           <h2>{trainingSession.teamName}</h2>
           <h2>{trainingSession.duration}</h2>
         </>
+      ) : (
+        <>Loading...</>
       )}
     </>
   );
