@@ -10,6 +10,7 @@ import TeamPage from "./TeamPage";
 import SessionPage from "./SessionPage";
 import PlayerPage from "./PlayerPage";
 import apiMethods, { ProfileResponse } from "./API";
+import ErrorPage from "./ErrorPage";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(
@@ -37,13 +38,16 @@ const App = () => {
               path="/player/:playerName"
               element={<PlayerPage user={loggedIn} />}
             />
-            <Route path="/team/:teamName" element={<TeamPage />} />
+            <Route
+              path="/team/:teamName"
+              element={<TeamPage player={loggedIn} />}
+            />
             <Route
               path="/session/:sessionName/:team"
               element={<SessionPage />}
             />
             <Route path="/statistic" element={<StatisticPage />} />
-            <Route path="*" />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       ) : (

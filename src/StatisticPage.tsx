@@ -1,4 +1,4 @@
-import Sidebar from "./components/Nav/Sidebar";
+import Sidebar from "./components/nav/Sidebar";
 import { Container, Row } from "react-bootstrap";
 const StatisticPage = () => {
   return (
