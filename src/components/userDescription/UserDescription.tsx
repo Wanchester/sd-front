@@ -6,12 +6,7 @@ import apiMethods, { ProfileResponse } from "../../API";
 const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
   const [isEdit, setEdit] = useState(true);
 
-  const [change, setChange] = useState({
-    nationality: userList.nationality,
-    height: userList.height,
-    weight: userList.weight,
-    dob: userList.dob,
-  });
+  const [change, setChange] = useState({} as Partial<ProfileResponse>);
 
   const handleChange = (
     event: ChangeEvent<
@@ -28,6 +23,7 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
   const submitChange = () => {
     apiMethods.putPlayer(change);
     setEdit(!isEdit);
+    setChange({});
   };
   return (
     <>
