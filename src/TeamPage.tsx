@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import { Container, Row, Col, Table } from "react-bootstrap";
-import Slider from "./components/slider";
+import Slider from "./components/Slider";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 
 const SliderProps = {
