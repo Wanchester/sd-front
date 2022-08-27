@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
-import apiMethods, { PlayerList } from "./API";
+import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/slider";
 import GraphContainer from "./components/graphContainer/GraphContainer";
-import { ProfileResponse } from "./API";
 
 const SliderProps = {
   zoomFactor: 30, // How much the image should zoom on hover in percent
