@@ -21,5 +21,10 @@ export const GlobalStyle = createGlobalStyle`
     table, td, th{
         margin-bottom: 0;
         color: var(--white);
+        word-break: break-word;
+    }
+    a{
+        color: inherit;
+        text-decoration: none;
     }
 `;

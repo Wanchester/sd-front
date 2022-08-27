@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
-import apiMethods, { PlayerList } from "./API";
-import { Container, Row, Col } from "react-bootstrap";
+import apiMethods, { PlayerList, ProfileResponse } from "./API";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
+import GraphContainer from "./components/graphContainer/GraphContainer";
 
 const SliderProps = {
   zoomFactor: 30, // How much the image should zoom on hover in percent
@@ -11,7 +12,11 @@ const SliderProps = {
   maxVisibleSlides: 5,
   pageTransition: 500, // Transition time when flipping pages
 };
-const TeamPage: React.FC = () => {
+const TeamPage: React.FC<{ player: ProfileResponse }> = ({
+  player,
+}: {
+  player: ProfileResponse;
+}) => {
   const [playerList, setPlayerList] = useState(null as PlayerList | null);
   // const [data, setData] = useState<PlayerList[]>([]);
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,8 +48,18 @@ const TeamPage: React.FC = () => {
             <Col>
               <Slider {...SliderProps}>
                 {playerList &&
-                  playerList.players.map((p) => (
-                    <Link to={`/player/${p.username}`}>
+                  playerList.players.map((p) =>
+                    player.role !== "player" ? (
+                      <Link to={`/player/${p.username}`}>
+                        <div key={p.name}>
+                          <img
+                            src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
+                            alt="xd"
+                          />
+                          <>{p.name}</>
+                        </div>
+                      </Link>
+                    ) : (
                       <div key={p.name}>
                         <img
                           src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
@@ -52,8 +67,8 @@ const TeamPage: React.FC = () => {
                         />
                         <>{p.name}</>
                       </div>
-                    </Link>
-                  ))}
+                    )
+                  )}
               </Slider>
             </Col>
           </Row>
@@ -61,6 +76,9 @@ const TeamPage: React.FC = () => {
       ) : (
         <>Loading...</>
       )}
+      <Table responsive bordered>
+        <GraphContainer />
+      </Table>
     </>
   );
 };

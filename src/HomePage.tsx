@@ -44,9 +44,11 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           lg={2}
           xl={3}
         >
-          <Link to="/statistic">
-            <Button>My statistics</Button>
-          </Link>
+          {player.role === "player" && (
+            <Link to="/statistic">
+              <Button>My statistics</Button>
+            </Link>
+          )}
         </Col>
       </Row>
       <Row className="pt-4">

@@ -1,36 +1,56 @@
-import Table from "react-bootstrap/Table";
+import { Table, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ProfileResponse } from "../../API";
 
 const TrainingSession = ({ userList }: { userList: ProfileResponse }) => {
   return (
     <Table responsive bordered variant="dark" className="table-condensed mb-0">
-      <thead>
-        <td>Session Name</td>
-        <td>Session Start</td>
-        <td>Session Stop</td>
-        <td>Team Name</td>
-        <td>Session Duration</td>
-      </thead>
+      <Row>
+        <Col xs={2} md={2} lg={2} xl={2}>
+          Session Name
+        </Col>
+        <Col xs={3} md={3} lg={3} xl={3}>
+          Session Start
+        </Col>
+        <Col xs={3} md={3} lg={3} xl={3}>
+          Session Stop
+        </Col>
+        <Col xs={2} md={2} lg={2} xl={2}>
+          Team Name
+        </Col>
+        <Col xs={2} md={2} lg={2} xl={2}>
+          Session Duration
+        </Col>
+      </Row>
       {userList.trainingSessions &&
         userList.trainingSessions.map((session) => {
           return (
             <>
-              <tbody>
-                <Link
-                  to={`/session/${encodeURIComponent(session.sessionName)}/${
-                    session.teamName
-                  }`}
-                >
-                  <td>{session.sessionName}</td>
-                </Link>
-                <td>{session.sessionStart}</td>
-                <td>{session.sessionStop}</td>
-                <Link to={`/team/${session.teamName}`}>
-                  <td>{session.teamName}</td>
-                </Link>
-                <td>{session.duration}</td>
-              </tbody>
+              <Row className="responsive">
+                <Col xs={2} md={2} lg={2} xl={2}>
+                  <Link
+                    to={`/session/${encodeURIComponent(session.sessionName)}/${
+                      session.teamName
+                    }`}
+                  >
+                    {session.sessionName}
+                  </Link>
+                </Col>
+                <Col xs={3} md={3} lg={3} xl={3}>
+                  {session.sessionStart}
+                </Col>
+                <Col xs={3} md={3} lg={3} xl={3}>
+                  {session.sessionStop}
+                </Col>
+                <Col xs={2} md={2} lg={2} xl={2}>
+                  <Link to={`/team/${session.teamName}`}>
+                    {session.teamName}
+                  </Link>
+                </Col>
+                <Col xs={2} md={2} lg={2} xl={2}>
+                  {session.duration}
+                </Col>
+              </Row>
             </>
           );
         })}
