@@ -3,9 +3,14 @@ import { Table, Button } from "react-bootstrap";
 import { Info, Context } from "./UserDescription.styles";
 import { FaEdit } from "react-icons/fa";
 import apiMethods, { ProfileResponse } from "../../API";
-const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
+const UserDescription = ({
+  userList,
+  isPlayer,
+}: {
+  userList: ProfileResponse;
+  isPlayer: boolean;
+}) => {
   const [isEdit, setEdit] = useState(true);
-
   const [change, setChange] = useState({} as Partial<ProfileResponse>);
 
   const handleChange = (
@@ -21,10 +26,12 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
     });
   };
   const submitChange = () => {
-    apiMethods.putPlayer(change);
-    setEdit(!isEdit);
-    setChange({});
+    apiMethods.putPlayer(change).then(() => {
+      setEdit(!isEdit);
+      setChange({});
+    });
   };
+
   return (
     <>
       <Table
@@ -74,14 +81,14 @@ const UserDescription = ({ userList }: { userList: ProfileResponse }) => {
             );
           })}
       </Table>
-
-      {isEdit ? (
-        <Button onClick={() => setEdit(!isEdit)}>
-          <FaEdit />
-        </Button>
-      ) : (
-        <Button onClick={() => submitChange()}>Save changes</Button>
-      )}
+      {isPlayer &&
+        (isEdit ? (
+          <Button onClick={() => setEdit(!isEdit)}>
+            <FaEdit />
+          </Button>
+        ) : (
+          <Button onClick={() => submitChange()}>Save changes</Button>
+        ))}
     </>
   );
 };

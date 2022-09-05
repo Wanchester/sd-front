@@ -35,11 +35,11 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           <Row>
             <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
               <div className="w-100 border-end">
-                <Avatar imageLink="image/player.jpeg" />
+                <Avatar imageLink="/image/player.jpeg" />
               </div>
             </Col>
             <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>
-              {player && <UserDescription userList={player} />}
+              {player && <UserDescription userList={player} isPlayer={false} />}
             </Col>
             <Col
               className="d-flex flex-direction: column flex-grow-1 justify-content-right align-self-end"
@@ -49,7 +49,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
               xl={3}
             >
               <Link to="/statistic">
-                <Button>My statistics</Button>
+                <Button>{playerName} statistics</Button>
               </Link>
             </Col>
           </Row>
@@ -60,7 +60,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           </Row>
           <Row>
             <Col md={{ span: 7, offset: 2 }}>
-              {player && <Teams teamsList={player.teams} />}
+              {player && <Teams teamsList={player.teams} user={user} />}
             </Col>
           </Row>
           <Row className="pt-4">

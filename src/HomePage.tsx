@@ -35,7 +35,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           </div>
         </Col>
         <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>
-          <UserDescription userList={player} />
+          <UserDescription userList={player} isPlayer={true} />
         </Col>
         <Col
           className="d-flex flex-direction: column flex-grow-1 justify-content-right align-self-end"
@@ -58,7 +58,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
       </Row>
       <Row>
         <Col md={{ span: 7, offset: 2 }}>
-          <Teams teamsList={teamsList} />
+          <Teams teamsList={teamsList} user={player} />
         </Col>
       </Row>
       <Row className="pt-4">

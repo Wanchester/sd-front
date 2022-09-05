@@ -38,19 +38,29 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
   return (
     <>
       {playerList ? (
-        <Container fluid p-0>
-          <Row>
-            <Col md={{ span: 7, offset: 2 }}>
-              <h2>Player List</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Slider {...SliderProps}>
-                {playerList &&
-                  playerList.players.map((p) =>
-                    player.role !== "player" ? (
-                      <Link to={`/player/${p.username}`}>
+        <>
+          <Container fluid p-0>
+            <Row>
+              <Col md={{ span: 7, offset: 2 }}>
+                <h2>Player List</h2>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Slider {...SliderProps}>
+                  {playerList &&
+                    playerList.players.map((p) =>
+                      player.role !== "player" ? (
+                        <Link to={`/player/${p.username}`}>
+                          <div key={p.name}>
+                            <img
+                              src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
+                              alt="xd"
+                            />
+                            <>{p.name}</>
+                          </div>
+                        </Link>
+                      ) : (
                         <div key={p.name}>
                           <img
                             src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
@@ -58,27 +68,19 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
                           />
                           <>{p.name}</>
                         </div>
-                      </Link>
-                    ) : (
-                      <div key={p.name}>
-                        <img
-                          src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
-                          alt="xd"
-                        />
-                        <>{p.name}</>
-                      </div>
-                    )
-                  )}
-              </Slider>
-            </Col>
-          </Row>
-        </Container>
+                      )
+                    )}
+                </Slider>
+              </Col>
+            </Row>
+          </Container>
+          <Table responsive bordered>
+            <GraphContainer />
+          </Table>
+        </>
       ) : (
         <>Loading...</>
       )}
-      <Table responsive bordered>
-        <GraphContainer />
-      </Table>
     </>
   );
 };
