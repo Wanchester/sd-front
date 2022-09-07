@@ -33,6 +33,12 @@ export interface TrainingSession {
   teamName: string;
   duration: string;
 }
+export interface StatisticData {
+  [playerName: string]: {
+    [fieldName: string]: [string, number][];
+  };
+}
+
 const apiMethods = {
   //player
   getCurrentPlayer: async () => {
@@ -76,6 +82,20 @@ const apiMethods = {
         return response.data as TrainingSession;
       });
   },
+  getTeamTrainingSession: async (teamName: string | undefined) => {
+    return axios
+      .get("/api/trainingSessions", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          teamName: teamName,
+        },
+      })
+      .then((response) => {
+        return response.data as TrainingSession[];
+      });
+  },
   //team
   getTeam: async (team: string | undefined) => {
     return axios
@@ -89,6 +109,20 @@ const apiMethods = {
       })
       .then((response) => response.data as PlayerList);
   },
+  //statistic
+  //for team
+  //line graph
+  getLineGraphStatistic: async () => {
+    return axios
+      .post("/api/lineGraph", {
+        sessions: ["NULL 17/4/22", "NULL 2/4/22"],
+        teams: ["TeamBit", "Team3"],
+        fields: ["Velocity", "Height", "Distance"],
+        time_window: { every: "3600", func: "mean" },
+      })
+      .then((response) => response.data as StatisticData);
+  },
+
   //log in log out system
   logIn: async (credential: Credential): Promise<string | false> => {
     return axios.post("/api/login", credential).then(
