@@ -30,9 +30,9 @@ export interface ChartProps {
    * Data of the graph. Default to `{}`.
    *
    * Keys of the object are subjects. Each subject corresponds to an array
-   * of X and Y coordinates.
+   * of an array of two values, which are X and Y coordinates, respectively.
    */
-  data: Record<string, { x: string; y: number }[]>;
+  data: Record<string, [string, number][]>;
 
   /**
    * Type of the graph. Default to `line`.
@@ -60,7 +60,7 @@ export default function BaseChart(props: Partial<ChartProps>) {
               .reduce(
                 (prev, curr) => [
                   ...prev,
-                  ...curr[1].map((v) => ({ x: v.x, [curr[0]]: v.y })),
+                  ...curr[1].map((v) => ({ x: v[0], [curr[0]]: v[1] })),
                 ],
                 [] as Record<string, string | number>[]
               )
