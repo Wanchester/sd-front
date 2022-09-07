@@ -39,87 +39,6 @@ export interface StatisticData {
   };
 }
 
-//tobe deleted
-const dummyData: StatisticData = {
-  "5C3EBE": {
-    Velocity: [],
-    Height: [],
-    Distance: [["2022-09-02T02:00:00Z", 0]],
-  },
-  "6C3EBE": {
-    Velocity: [],
-    Height: [],
-    Distance: [["2022-09-02T02:00:00Z", 0]],
-  },
-  Boucher: {
-    Velocity: [],
-    Height: [],
-    Distance: [
-      ["2022-09-02T02:00:00Z", 201.9142857142857],
-      ["2022-09-02T03:00:00Z", 3722.7646782967554],
-      ["2022-09-02T04:00:00Z", 3290.7622676579927],
-      ["2022-09-02T05:00:00Z", 5759.22618629174],
-    ],
-  },
-  F4E2BC: { Velocity: [], Height: [], Distance: [["2022-09-02T02:00:00Z", 0]] },
-  Flynn: {
-    Velocity: [],
-    Height: [],
-    Distance: [
-      ["2022-09-02T02:00:00Z", 190.91017964071855],
-      ["2022-09-02T03:00:00Z", 3208.9003345413994],
-      ["2022-09-02T04:00:00Z", 2964.522083179978],
-      ["2022-09-02T05:00:00Z", 5123.978949199722],
-    ],
-  },
-  JD: {
-    Velocity: [],
-    Height: [],
-    Distance: [
-      ["2022-09-02T02:00:00Z", 178.33236994219652],
-      ["2022-09-02T03:00:00Z", 3330.620882188721],
-      ["2022-09-02T04:00:00Z", 2847.0568097705404],
-      ["2022-09-02T05:00:00Z", 4715.666081049426],
-    ],
-  },
-  Jbk: {
-    Velocity: [],
-    Height: [],
-    Distance: [
-      ["2022-08-17T03:00:00Z", 5.909090909090909],
-      ["2022-08-17T04:00:00Z", 683.9524185068349],
-      ["2022-08-17T05:00:00Z", 1264.99549950544],
-      ["2022-08-17T06:00:00Z", 1389.0794444444443],
-      ["2022-08-17T07:00:00Z", 2719.8413978494627],
-    ],
-  },
-  "NO PLAYER": {
-    Velocity: [],
-    Height: [],
-    Distance: [["2022-09-02T02:00:00Z", 1.2]],
-  },
-  Nolan: {
-    Velocity: [
-      ["2022-08-17T03:00:00Z", 0.02381818181818181],
-      ["2022-08-17T04:00:00Z", 5.406163697752939],
-      ["2022-08-17T05:00:00Z", 1.4188241216148194],
-      ["2022-08-17T06:00:00Z", 1.612180381218038],
-      ["2022-08-17T07:00:00Z", 1.6197465437788017],
-    ],
-    Height: [],
-    Distance: [],
-  },
-  Silv: {
-    Velocity: [],
-    Height: [],
-    Distance: [
-      ["2022-09-02T02:00:00Z", 217.010101010101],
-      ["2022-09-02T03:00:00Z", 3886.313271604938],
-      ["2022-09-02T04:00:00Z", 3290.787795992714],
-      ["2022-09-02T05:00:00Z", 5362.993596400139],
-    ],
-  },
-};
 const apiMethods = {
   //player
   getCurrentPlayer: async () => {
@@ -194,15 +113,14 @@ const apiMethods = {
   //for team
   //line graph
   getLineGraphStatistic: async () => {
-    // return axios
-    //   .post("/api/lineGraph", {
-    //     sessions: ["NULL 17/4/22", "NULL 2/4/22"],
-    //     teams: ["TeamBit", "Team3"],
-    //     fields: ["Velocity", "Height", "Distance"],
-    //     time_window: { every: "3600", func: "mean" },
-    //   })
-    //   .then((response) => response.data);
-    return dummyData;
+    return axios
+      .post("/api/lineGraph", {
+        sessions: ["NULL 17/4/22", "NULL 2/4/22"],
+        teams: ["TeamBit", "Team3"],
+        fields: ["Velocity", "Height", "Distance"],
+        time_window: { every: "3600", func: "mean" },
+      })
+      .then((response) => response.data as StatisticData);
   },
 
   //log in log out system

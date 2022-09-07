@@ -10,76 +10,63 @@ const GraphContainer = () => {
   useEffect(() => {
     apiMethods.getLineGraphStatistic().then((d) => {
       setData(d);
-      setFields(
-        Array.from(
-          new Set(
-            Object.values(d).reduce(
-              (prev, curr) => [...prev, ...Object.keys(curr)],
-              [] as string[]
-            )
+
+      const newFields = Array.from(
+        new Set(
+          Object.values(d).reduce(
+            (prev, curr) => [...prev, ...Object.keys(curr)],
+            [] as string[]
           )
         )
       );
+      setFields(newFields);
+      setSelectedField(newFields[0] || null);
     });
   }, []);
-  useEffect(() => {
-    if (fields) {
-      setSelectedField(fields[0]);
-    }
-  }, [fields]);
   return (
     <Container className="responsive h-100 w-100">
-      <Tab.Container id="left-tabs-example">
+      <Tab.Container>
         <Row>
-          {data && fields && (
+          {data && fields ? (
             <>
               <Col sm={3} md={3} lg={3} xl={3}>
                 <Nav
-                  variant="pills"
                   className="flex-column"
-                  defaultActiveKey={fields[0]}
+                  variant="pills"
+                  onSelect={(field) => setSelectedField(field)}
                 >
-                  <Nav.Item>
-                    <>
-                      {fields &&
-                        fields.map((value) => {
-                          <Nav.Link
-                            eventKey={value}
-                            onClick={() => {
-                              setSelectedField(value);
-                            }}
-                          >
-                            {value}
-                          </Nav.Link>;
-                        })}
-                    </>
-                  </Nav.Item>
+                  <>
+                    {fields.map((value, index) => (
+                      <Nav.Item>
+                        <Nav.Link
+                          key={index}
+                          eventKey={value}
+                          active={value === selectedField}
+                        >
+                          {value}
+                        </Nav.Link>
+                      </Nav.Item>
+                    ))}
+                  </>
                 </Nav>
               </Col>
               <Col sm={9} md={9} lg={9} xl={9}>
-                <Tab.Content className="h-50 d-inline-block">
+                <Tab.Content>
                   {selectedField && (
-                    <Tab.Pane
-                      eventKey={selectedField}
-                      className="pb-1 postition-relative h-100 w-100"
-                    >
-                      {data && selectedField ? (
-                        <BaseChart
-                          data={Object.fromEntries(
-                            Object.entries(data).map((entry) => [
-                              entry[0],
-                              entry[1][selectedField],
-                            ])
-                          )}
-                        />
-                      ) : (
-                        <></>
+                    <BaseChart
+                      data={Object.fromEntries(
+                        Object.entries(data).map((entry) => [
+                          entry[0],
+                          entry[1][selectedField],
+                        ])
                       )}
-                    </Tab.Pane>
+                    />
                   )}
                 </Tab.Content>
               </Col>
             </>
+          ) : (
+            <p>Loading...</p>
           )}
         </Row>
       </Tab.Container>

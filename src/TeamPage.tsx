@@ -5,7 +5,6 @@ import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
 import GraphContainer from "./components/graphContainer/GraphContainer";
-import TrainingSession from "./components/trainingSession/TrainingSession";
 
 const SliderProps = {
   zoomFactor: 30, // How much the image should zoom on hover in percent
@@ -40,7 +39,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
     <>
       {playerList ? (
         <>
-          <Container fluid p-0>
+          <Container fluid>
             <Row>
               <Col md={{ span: 7, offset: 2 }}>
                 <h2>Player List</h2>
