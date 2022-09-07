@@ -20,20 +20,25 @@ const GraphContainer = () => {
           )
         )
       );
-
-      if (fields) {
-        setSelectedField(fields[0]);
-      }
     });
+  }, []);
+  useEffect(() => {
+    if (fields) {
+      setSelectedField(fields[0]);
+    }
   }, [fields]);
   return (
     <Container className="responsive h-100 w-100">
       <Tab.Container id="left-tabs-example">
         <Row>
-          {data && (
+          {data && fields && (
             <>
               <Col sm={3} md={3} lg={3} xl={3}>
-                <Nav variant="pills" className="flex-column">
+                <Nav
+                  variant="pills"
+                  className="flex-column"
+                  defaultActiveKey={fields[0]}
+                >
                   <Nav.Item>
                     <>
                       {fields &&
@@ -56,7 +61,7 @@ const GraphContainer = () => {
                   {selectedField && (
                     <Tab.Pane
                       eventKey={selectedField}
-                      className="pb-1 postition-relative"
+                      className="pb-1 postition-relative h-100 w-100"
                     >
                       {data && selectedField ? (
                         <BaseChart
