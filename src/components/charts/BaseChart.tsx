@@ -13,6 +13,13 @@ import {
   YAxis,
 } from "recharts";
 
+//sample data format
+// {
+//   "p_jbk": [
+//       { x: "day 1", y: 10 },
+//       { x: "day 2", y: 20 }
+//   ]
+// }
 export interface ChartProps {
   /**
    * The width / height ratio for drawing the charts.

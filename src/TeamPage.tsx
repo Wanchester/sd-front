@@ -5,6 +5,7 @@ import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
 import GraphContainer from "./components/graphContainer/GraphContainer";
+import TrainingSession from "./components/trainingSession/TrainingSession";
 
 const SliderProps = {
   zoomFactor: 30, // How much the image should zoom on hover in percent
