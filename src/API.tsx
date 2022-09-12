@@ -33,45 +33,52 @@ export interface TrainingSession {
   teamName: string;
   duration: string;
 }
-export type InfluxColumn = 'teams' | 'sessions' | 'players';
-export type AggregateFunc = 'mean' | 'median' | 'mode' | 'max' | 'min' | 'timedMovingAverage';
+export type InfluxColumn = "teams" | "sessions" | "players";
+export type AggregateFunc =
+  | "mean"
+  | "median"
+  | "mode"
+  | "max"
+  | "min"
+  | "timedMovingAverage";
 const influxFields = [
-  '2dAccuracy',             //gps accuracy in mm
-  '3dAccuracy',
-  'lat', 'lon',             //gps coordinates in degrees * 10^6
-  'Velocity',               //speed in m/s
-    //reset at haltime
-  'Distance',               //travel distance in m
-  'Height',                 //height in m?
-  'Run Distance',           //distance travelled over 4.5m/s in m
-  'Sprint Distance',        //distance travelled over 6m/s in m
-  'Work Rate',              //Distance / time as m/min
-    //reset at start of session
-  'Total Distance',
-  'Total Run Distance',
-  'Total Sprint Distance',
-  'Total WorkRate',
+  "2dAccuracy", //gps accuracy in mm
+  "3dAccuracy",
+  "lat",
+  "lon", //gps coordinates in degrees * 10^6
+  "Velocity", //speed in m/s
+  //reset at haltime
+  "Distance", //travel distance in m
+  "Height", //height in m?
+  "Run Distance", //distance travelled over 4.5m/s in m
+  "Sprint Distance", //distance travelled over 6m/s in m
+  "Work Rate", //Distance / time as m/min
+  //reset at start of session
+  "Total Distance",
+  "Total Run Distance",
+  "Total Sprint Distance",
+  "Total WorkRate",
 ] as const;
 export type InfluxField = typeof influxFields[number];
 
 export interface StatisticData {
   [playerName: string]: {
     //these are InfluxFields
-    [fieldName: string]?: [string, number][];
+    [fieldName: string]: [string, number][];
   };
 }
 export interface LineGraphQuery {
-  'fields': (typeof influxFields[number])[],
-  'names'?: string[],
-  'sessions'?: string[],
-  'teams'?:  string[],
-  'aggregate'?: {
-      //how often is there a new window?
-    'every'?: number,  //in seconds
-      //how wide is the window?
-    'period'?: number, //in seconds
-    'func'?: AggregateFunc, //will default to mean
-  },
+  fields: typeof influxFields[number][];
+  names?: string[];
+  sessions?: string[];
+  teams?: string[];
+  aggregate?: {
+    //how often is there a new window?
+    every?: number; //in seconds
+    //how wide is the window?
+    period?: number; //in seconds
+    func?: AggregateFunc; //will default to mean
+  };
 }
 
 const apiMethods = {
