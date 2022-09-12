@@ -56,8 +56,8 @@ export type InfluxField = typeof influxFields[number];
 
 export interface StatisticData {
   [playerName: string]: {
-    //these are fieldNames as strings
-    [P in keyof InfluxField as InfluxField]?: [string, number][];
+    //these are InfluxFields
+    [fieldName: string]?: [string, number][];
   };
 }
 export interface LineGraphQuery {
