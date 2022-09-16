@@ -25,6 +25,7 @@ module.exports = {
     project: './tsconfig.json'
   },
   rules: {
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'linebreak-style': 'off',
     'prettier/prettier': [
       'error',
