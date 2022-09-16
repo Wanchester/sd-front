@@ -78,7 +78,7 @@ export interface LineGraphQuery {
     //how wide is the window?
     period?: number; //in seconds
     func?: AggregateFunc; //will default to mean
-    dont_mix?: InfluxColumn;
+    dont_mix?: InfluxColumn[];
   };
 }
 
