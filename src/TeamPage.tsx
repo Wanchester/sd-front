@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
-import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
+import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import GraphContainer from "./components/graphContainer/GraphContainer";
+import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
 
 const SliderProps = {
   zoomFactor: 30, // How much the image should zoom on hover in percent
@@ -18,6 +19,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
   player: ProfileResponse;
 }) => {
   const [playerList, setPlayerList] = useState(null as PlayerList | null);
+  const [playerNames, setPlayerNames] = useState([] as string[]);
   // const [data, setData] = useState<PlayerList[]>([]);
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const [activePlayer, setActivePlayer] = useState<PlayerList>();
@@ -31,12 +33,25 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
   useEffect(() => {
     apiMethods.getTeam(teamName).then((team) => {
       setPlayerList(team);
+      setPlayerNames(
+        Array.from(
+          team.players.map(function (r) {
+            return r.name;
+          })
+        )
+      );
     });
+    console.log("Team Page", teamName);
   }, [teamName]);
+  console.log("Team Page 1", teamName);
+
   if (playerList && playerList.players.length < 1) return <div>Loading </div>;
 
   return (
     <>
+      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
+        <Breadcrumbs />
+      </Row>
       {playerList ? (
         <>
           <Container fluid>
@@ -75,7 +90,13 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
             </Row>
           </Container>
           <Table responsive bordered>
-            <GraphContainer />
+            {teamName && playerNames && (
+              <GraphContainer
+                teamReq={[teamName]}
+                nameReq={playerNames}
+                isComposed={true}
+              />
+            )}
           </Table>
         </>
       ) : (

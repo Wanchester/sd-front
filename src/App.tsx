@@ -38,15 +38,20 @@ const App = () => {
               path="/player/:playerName"
               element={<PlayerPage user={loggedIn} />}
             />
+
             <Route
               path="/team/:teamName"
               element={<TeamPage player={loggedIn} />}
             />
+
             <Route
               path="/session/:sessionName/:team"
               element={<SessionPage />}
             />
-            <Route path="/statistic" element={<StatisticPage />} />
+            <Route
+              path="/statistics/:playerName"
+              element={<StatisticPage player={loggedIn} />}
+            />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>

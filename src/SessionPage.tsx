@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { TrainingSession } from "./API";
+import { Table, Row } from "react-bootstrap";
+import GraphContainer from "./components/graphContainer/GraphContainer";
+import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
+
 const SessionPage = () => {
   const { sessionName, team } = useParams();
   const [trainingSession, setTrainingSession] = useState(
     null as TrainingSession | null
   );
+
   useEffect(() => {
     if (sessionName && team)
       apiMethods
@@ -19,6 +24,9 @@ const SessionPage = () => {
   }, [sessionName, team]);
   return (
     <>
+      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
+        <Breadcrumbs />
+      </Row>
       {trainingSession ? (
         <>
           <h1>{trainingSession.sessionName}</h1>
@@ -26,6 +34,9 @@ const SessionPage = () => {
           <h2>{trainingSession.sessionStop}</h2>
           <h2>{trainingSession.teamName}</h2>
           <h2>{trainingSession.duration}</h2>
+          <Table responsive bordered>
+            <GraphContainer sessionReq={[trainingSession.sessionName]} />
+          </Table>
         </>
       ) : (
         <>Loading...</>

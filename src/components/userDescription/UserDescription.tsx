@@ -29,6 +29,7 @@ const UserDescription = ({
     apiMethods.putPlayer(change).then(() => {
       setEdit(!isEdit);
       setChange({});
+      window.location.reload();
     });
   };
 

@@ -24,9 +24,8 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           Logout
         </a>
       </div>
-      <Row>
-        <h1 className="py-4 mb-0">Homepage</h1>
-        <hr />
+      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
+        <h1>Home</h1>
       </Row>
       <Row>
         <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
@@ -45,7 +44,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           xl={3}
         >
           {player.role === "player" && (
-            <Link to="/statistic">
+            <Link to={`/statistics/${player.name}`}>
               <Button>My statistics</Button>
             </Link>
           )}
