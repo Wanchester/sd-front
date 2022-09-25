@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import BaseChart from "../charts/BaseChart";
 import apiMethods, { StatisticData } from "../../API";
@@ -11,19 +11,16 @@ export interface GraphContainerProps {
 }
 
 const GraphContainer = (props: GraphContainerProps) => {
-  props = {
-    teamReq: [],
-    nameReq: [],
-    sessionReq: [],
-    isComposed: false,
-    ...props,
-  };
   const [data, setData] = useState(null as StatisticData | null);
   const [fields, setFields] = useState(null as string[] | null);
   const [selectedField, setSelectedField] = useState(null as string | null);
   useEffect(() => {
     apiMethods
-      .getLineGraphStatistic(props.teamReq, props.nameReq, props.sessionReq)
+      .getLineGraphStatistic(
+        props.teamReq || [],
+        props.nameReq || [],
+        props.sessionReq || []
+      )
       .then((d) => {
         setData(d);
         const newFields = Array.from(
@@ -37,8 +34,7 @@ const GraphContainer = (props: GraphContainerProps) => {
         setFields(newFields);
         setSelectedField(newFields[0] || null);
       });
-    console.log(props.nameReq, props.sessionReq, props.teamReq);
-  });
+  }, [props.teamReq, props.nameReq, props.sessionReq]);
 
   return (
     <Container className="responsive h-100 w-100">
