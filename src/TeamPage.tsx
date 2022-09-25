@@ -41,9 +41,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
         )
       );
     });
-    console.log("Team Page", teamName);
   }, [teamName]);
-  console.log("Team Page 1", teamName);
 
   if (playerList && playerList.players.length < 1) return <div>Loading </div>;
 

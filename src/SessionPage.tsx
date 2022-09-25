@@ -12,15 +12,16 @@ const SessionPage = () => {
   );
 
   useEffect(() => {
-    if (sessionName && team)
+    if (sessionName && team) {
       apiMethods
         .getTrainingSession(sessionName, team)
         .then((session) => {
           setTrainingSession(session);
         })
         .catch((e) => {
-          console.log(e);
+          console.error(e);
         });
+    }
   }, [sessionName, team]);
   return (
     <>

@@ -52,14 +52,9 @@ export interface ChartProps {
 }
 
 export default function BaseChart(props: ChartProps) {
-  props = {
-    aspect: 4 / 3,
-    flip: false,
-    graphs: [],
-    ...props,
-  };
-
-  props.graphs = (props.graphs ?? []).map((graph) => ({
+  const aspect = props.aspect || 4 / 3;
+  const flip = props.flip || false;
+  const graphs = (props.graphs ?? []).map((graph) => ({
     curved: false,
     data: {},
     type: "line",
@@ -67,8 +62,8 @@ export default function BaseChart(props: ChartProps) {
   }));
 
   const data = Object.values(
-    props
-      .graphs!.map((graph, index) =>
+    graphs
+      .map((graph, index) =>
         Object.values(
           Object.entries(graph.data ?? {})
             .reduce(
@@ -97,13 +92,13 @@ export default function BaseChart(props: ChartProps) {
 
   return (
     <Container style={{ background: "#fffdfa" }}>
-      <ResponsiveContainer aspect={props.aspect}>
+      <ResponsiveContainer aspect={aspect}>
         <ComposedChart
           data={data}
           margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
-          layout={props.flip ? "vertical" : "horizontal"}
+          layout={flip ? "vertical" : "horizontal"}
         >
-          {props.flip ? (
+          {flip ? (
             <>
               <XAxis type="number" />
               <YAxis dataKey="x" type="category" />
@@ -131,7 +126,7 @@ export default function BaseChart(props: ChartProps) {
             const graphIndex = parseInt(line.split("|")[0]);
             const name = line.split("|").slice(1).join("|");
 
-            return props.graphs![graphIndex].type === "bar" ? (
+            return graphs[graphIndex].type === "bar" ? (
               <Bar
                 key={index}
                 name={name}
@@ -142,7 +137,7 @@ export default function BaseChart(props: ChartProps) {
             ) : (
               <Line
                 key={index}
-                type={props.graphs![graphIndex].curved ? "monotone" : "linear"}
+                type={graphs[graphIndex].curved ? "monotone" : "linear"}
                 name={name}
                 dataKey={line}
                 stroke={randomColor({ luminosity: "dark" })}
