@@ -41,8 +41,12 @@ export interface StatisticData {
 
 //wait for implementation
 export interface CombinationGraphResponse {
-  line: [string, number][];
-  bar: [string, number][];
+  line: {
+    [fieldName: string]: [string, number][];
+  };
+  bar: {
+    [fieldName: string]: [string, number, string][];
+  };
 }
 
 export interface TrainingSessionsGetInterface {
@@ -127,12 +131,23 @@ const apiMethods = {
   },
   //composed graph
 
-  //wait for implementation
-  // getComposedGraphStatistic: async () => {
-  //   return axios.post("/api/", {}).then((response) => {
-  //     response.data as CombinationGraphResponse;
-  //   });
-  // },
+  getCombinationGraphStatistic: async (
+    teamReq?: string[],
+    nameReq?: string[],
+    sessionReq?: string[],
+    funcReq?: string
+  ) => {
+    return axios
+      .post("/api/combinationGraph", {
+        sessions: sessionReq, // [sessionName]
+        names: nameReq, //[]
+        teams: teamReq, // []
+        fields: ["Velocity", "Height", "Distance"],
+        aggregate: { func: "mean" }, // funcReq default to average
+        // time_window: { func: funcReq || "mean" },
+      })
+      .then((response) => response.data as CombinationGraphResponse);
+  },
 
   //log in log out system
   logIn: async (credential: Credential): Promise<string | false> => {
