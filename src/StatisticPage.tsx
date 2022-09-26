@@ -23,7 +23,11 @@ const StatisticPage = ({ player }: { player: ProfileResponse }) => {
       <Table responsive bordered>
         <Row>
           {playerName && (
-            <GraphContainer teamReq={teams} nameReq={[playerName]} />
+            <GraphContainer
+              isComposed={true}
+              teamReq={teams}
+              nameReq={[playerName]}
+            />
           )}
         </Row>
         <Row sm={3} md={3} lg={3} xl={3}>
