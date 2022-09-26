@@ -82,24 +82,30 @@ export interface LineGraphQuery {
   };
 }
 
+//wait for implementation
+export interface CombinationGraphResponse {
+  line: {
+    [fieldName: string]: [string, number][];
+  };
+  bar: {
+    [fieldName: string]: [string, number, string][];
+  };
+}
+
+export interface TrainingSessionsGetInterface {
+  teamName: string;
+  sessionName: string;
+}
 const apiMethods = {
   //player
   getCurrentPlayer: async () => {
     return axios
-      .get(`/api/profile`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .get(`/api/profile`)
       .then((response) => response.data as ProfileResponse);
   },
   getPlayer: async (userID: string) => {
     return axios
-      .get(`/api/profile/${userID}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .get(`/api/profile/${userID}`)
       .then((response) => response.data as ProfileResponse);
   },
   putPlayer: async (player: Partial<ProfileResponse>) => {
@@ -112,13 +118,10 @@ const apiMethods = {
   getTrainingSession: async (sessionName: string, teamName: string) => {
     return axios
       .get("/api/trainingSessions", {
-        headers: {
-          "Content-Type": "application/json",
-        },
         params: {
           fullStats: true,
           teamName: teamName,
-          sessionName: sessionName,
+          sessionName: sessionName, //sessionName: sessionName
         },
       })
       .then((response) => {
@@ -128,9 +131,6 @@ const apiMethods = {
   getTeamTrainingSession: async (teamName: string | undefined) => {
     return axios
       .get("/api/trainingSessions", {
-        headers: {
-          "Content-Type": "application/json",
-        },
         params: {
           teamName: teamName,
         },
@@ -153,17 +153,43 @@ const apiMethods = {
       .then((response) => response.data as PlayerList);
   },
   //statistic
-  //for team
+
   //line graph
-  getLineGraphStatistic: async () => {
+  getLineGraphStatistic: async (
+    teamReq?: string[],
+    nameReq?: string[],
+    sessionReq?: string[],
+    funcReq?: string
+  ) => {
     return axios
       .post("/api/lineGraph", {
-        sessions: ["NULL 17/4/22", "NULL 2/4/22"],
-        teams: ["TeamBit", "Team3"],
+        sessions: sessionReq, // [sessionName]
+        names: nameReq, //[]
+        teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
-        time_window: { every: "3600", func: "mean" },
+        aggregate: { func: funcReq || "mean" }, // funcReq default to average
+        // time_window: { func: funcReq || "mean" },
       })
       .then((response) => response.data as StatisticData);
+  },
+  //composed graph
+
+  getCombinationGraphStatistic: async (
+    teamReq?: string[],
+    nameReq?: string[],
+    sessionReq?: string[],
+    funcReq?: string
+  ) => {
+    return axios
+      .post("/api/combinationGraph", {
+        sessions: sessionReq, // [sessionName]
+        names: nameReq, //[]
+        teams: teamReq, // []
+        fields: ["Velocity", "Height", "Distance"],
+        aggregate: { func: funcReq || "mean" }, // funcReq default to average
+        // time_window: { func: funcReq || "mean" },
+      })
+      .then((response) => response.data as CombinationGraphResponse);
   },
 
   //log in log out system
