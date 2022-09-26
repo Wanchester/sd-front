@@ -124,7 +124,7 @@ const apiMethods = {
         names: nameReq, //[]
         teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
-        aggregate: { func: "mean" }, // funcReq default to average
+        aggregate: { func: funcReq || "mean" }, // funcReq default to average
         // time_window: { func: funcReq || "mean" },
       })
       .then((response) => response.data as StatisticData);
@@ -143,7 +143,7 @@ const apiMethods = {
         names: nameReq, //[]
         teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
-        aggregate: { func: "mean" }, // funcReq default to average
+        aggregate: { func: funcReq || "mean" }, // funcReq default to average
         // time_window: { func: funcReq || "mean" },
       })
       .then((response) => response.data as CombinationGraphResponse);
