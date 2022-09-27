@@ -27,9 +27,6 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   }, [playerName]);
   return (
     <>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
       {user && (
         <>
           {user.role !== "player" ? (
