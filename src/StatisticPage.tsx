@@ -10,6 +10,7 @@ import { ProfileResponse } from "./API";
 const StatisticPage = ({ player }: { player: ProfileResponse }) => {
   const { playerName } = useParams();
   const [teams, setTeams] = useState(player.teams);
+
   return (
     <>
       <Container fluid>
@@ -38,6 +39,13 @@ const StatisticPage = ({ player }: { player: ProfileResponse }) => {
             }}
           />
         </Row>
+      </Table>
+      <Table responsive bordered>
+        {playerName && (
+          <Row>
+            <GraphContainer teamReq={teams} nameReq={[playerName]} />
+          </Row>
+        )}
       </Table>
     </>
   );

@@ -20,7 +20,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
 }) => {
   const [playerList, setPlayerList] = useState(null as PlayerList | null);
   const [playerNames, setPlayerNames] = useState([] as string[]);
-  // const [data, setData] = useState<PlayerList[]>([]);
+  const [error, setError] = useState("");
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const [activePlayer, setActivePlayer] = useState<PlayerList>();
 
@@ -31,16 +31,22 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
   const { teamName } = useParams();
 
   useEffect(() => {
-    apiMethods.getTeam(teamName).then((team) => {
-      setPlayerList(team);
-      setPlayerNames(
-        Array.from(
-          team.players.map(function (r) {
-            return r.name;
-          })
-        )
-      );
-    });
+    apiMethods
+      .getTeam(teamName)
+      .then((team) => {
+        setPlayerList(team);
+        setPlayerNames(
+          Array.from(
+            team.players.map(function (r) {
+              return r.name;
+            })
+          )
+        );
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(e.response.data.error);
+      });
   }, [teamName]);
 
   if (playerList && playerList.players.length < 1) return <div>Loading </div>;
@@ -98,7 +104,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
           </Table>
         </>
       ) : (
-        <>Loading...</>
+        <>{error}</>
       )}
     </>
   );

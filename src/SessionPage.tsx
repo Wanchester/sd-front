@@ -10,6 +10,7 @@ const SessionPage = () => {
   const [trainingSession, setTrainingSession] = useState(
     null as TrainingSession | null
   );
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (sessionName && team) {
@@ -20,6 +21,7 @@ const SessionPage = () => {
         })
         .catch((e) => {
           console.error(e);
+          setError(e.response.data.error);
         });
     }
   }, [sessionName, team]);
@@ -40,7 +42,7 @@ const SessionPage = () => {
           </Table>
         </>
       ) : (
-        <>Loading...</>
+        <>{error}</>
       )}
     </>
   );

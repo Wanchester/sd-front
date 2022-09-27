@@ -22,14 +22,12 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           setPlayer(p);
         })
         .catch((e) => {
+          console.error(e);
           setError(e.response.data.error);
         });
   }, [playerName]);
   return (
     <>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
       {user && (
         <>
           {user.role !== "player" ? (
@@ -59,7 +57,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
                   lg={2}
                   xl={3}
                 >
-                  <Link to={`/statistic/${playerName}`}>
+                  <Link to={`/statistics/${playerName}`}>
                     <Button>{playerName} statistics</Button>
                   </Link>
                 </Col>
