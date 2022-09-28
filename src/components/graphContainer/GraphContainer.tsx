@@ -85,6 +85,7 @@ const GraphContainer = (props: GraphContainerProps) => {
           ]
         : [
             {
+              type: "bar",
               data: Object.fromEntries(
                 Object.entries(data as StatisticData).map((entry) => [
                   entry[0],

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   const { playerName } = useParams();
   const [player, setPlayer] = useState(null as ProfileResponse | null);
+
   const [error, setError] = useState("");
   useEffect(() => {
     if (playerName)
@@ -22,10 +23,13 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           setPlayer(p);
         })
         .catch((e) => {
-          console.error(e);
           setError(e.response.data.error);
         });
-  }, [playerName]);
+  });
+  const checkExist = (team: string) => {
+    return user.teams.includes(team);
+  };
+
   return (
     <>
       {user && (
@@ -79,7 +83,13 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
               </Row>
               <Row>
                 <Col md={{ span: 7, offset: 2 }}>
-                  {player && <TrainingSession userList={player} />}
+                  {player && (
+                    <TrainingSession
+                      trainingList={player.trainingSessions.filter((session) =>
+                        checkExist(session.teamName)
+                      )}
+                    />
+                  )}
                 </Col>
               </Row>
             </Container>

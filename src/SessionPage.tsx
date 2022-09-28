@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import apiMethods, { TrainingSession } from "./API";
+import apiMethods, { ProfileResponse } from "./API";
 import { Table, Row } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
 
 const SessionPage = () => {
-  const { sessionName, team } = useParams();
+  const { sessionName } = useParams();
   const [trainingSession, setTrainingSession] = useState(
-    null as TrainingSession | null
+    null as ProfileResponse["trainingSessions"] | null
   );
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (sessionName && team) {
+    if (sessionName) {
       apiMethods
-        .getTrainingSession(sessionName, team)
+        .getTrainingSession([], [], [sessionName])
         .then((session) => {
           setTrainingSession(session);
         })
@@ -24,7 +24,7 @@ const SessionPage = () => {
           setError(e.response.data.error);
         });
     }
-  }, [sessionName, team]);
+  }, [sessionName]);
   return (
     <>
       <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
@@ -32,13 +32,18 @@ const SessionPage = () => {
       </Row>
       {trainingSession ? (
         <>
-          <h1>{trainingSession.sessionName}</h1>
-          <h2>{trainingSession.sessionStart}</h2>
-          <h2>{trainingSession.sessionStop}</h2>
-          <h2>{trainingSession.teamName}</h2>
-          <h2>{trainingSession.duration}</h2>
+          {trainingSession.map((s) => {
+            <>
+              <h1>{s.sessionName}</h1>
+              <h2>{s.sessionStart}</h2>
+              <h2>{s.sessionStop}</h2>
+              <h2>{s.teamName}</h2>
+              <h2>{s.duration}</h2>
+            </>;
+          })}
+
           <Table responsive bordered>
-            <GraphContainer sessionReq={[trainingSession.sessionName]} />
+            {sessionName && <GraphContainer sessionReq={[sessionName]} />}
           </Table>
         </>
       ) : (
