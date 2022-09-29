@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { ProfileResponse } from "./API";
-import { Table, Row } from "react-bootstrap";
+import { Table, Col } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
-import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
+import Header from "./components/header/Header";
 
 const SessionPage = () => {
   const { sessionName } = useParams();
@@ -27,9 +27,11 @@ const SessionPage = () => {
   }, [sessionName]);
   return (
     <>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
+      {sessionName && (
+        <Col>
+          <Header content={sessionName} />
+        </Col>
+      )}
       {trainingSession ? (
         <>
           {trainingSession.map((s) => {

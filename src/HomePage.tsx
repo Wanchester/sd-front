@@ -4,6 +4,7 @@ import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import Teams from "./components/teams/Teams";
 import TrainingSession from "./components/trainingSession/TrainingSession";
+import Header from "./components/header/Header";
 
 import apiMethods, { ProfileResponse } from "./API";
 import { Link } from "react-router-dom";
@@ -12,23 +13,28 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
   const teamsList = player.teams;
   return (
     <Container fluid>
-      <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-        <a
-          href="#"
-          onClick={async (event) => {
-            event.preventDefault();
-            await apiMethods.logOut();
-            window.location.reload();
-          }}
-        >
-          Logout
-        </a>
-      </div>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <h1>Home</h1>
+      <Row className="flex-grow-1 m-0" sm={6} md={4} lg={3} xl={2}>
+        <Col sm={10} md={10} lg={10} xl={10}>
+          <Header content={"Home"} />
+        </Col>
+        <Col sm={6} md={4} lg={3} xl={2}>
+          <Container fluid>
+            <Button
+              className="btn btn-secondary btn-small align-text-top"
+              href="#"
+              onClick={async (event) => {
+                event.preventDefault();
+                await apiMethods.logOut();
+                window.location.reload();
+              }}
+            >
+              Logout
+            </Button>
+          </Container>
+        </Col>
       </Row>
       <Row>
-        <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
+        <Col className="flex-grow-1" sm={2} md={2} lg={2} xl={2}>
           <div className="w-100 border-end">
             <Avatar imageLink="image/player.jpeg" />
           </div>

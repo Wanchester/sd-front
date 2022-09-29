@@ -5,7 +5,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
 import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import GraphContainer from "./components/graphContainer/GraphContainer";
-import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
+import Header from "./components/header/Header";
 import TrainingSession from "./components/trainingSession/TrainingSession";
 
 const SliderProps = {
@@ -62,9 +62,11 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
 
   return (
     <>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
+      {teamName && (
+        <Col>
+          <Header content={teamName} />
+        </Col>
+      )}
       {playerList ? (
         <>
           <Container fluid>
