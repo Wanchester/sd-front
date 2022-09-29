@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NavS = styled.p`
   display: flex;
@@ -22,10 +23,22 @@ export const NavsIcon = styled.p`
 export const SideWrap = styled.p`
   font-size: 2rem;
   margin-left: 2rem;
+  border-radius: 50%;
 `;
 
 export const NavsIcon2 = styled.p`
   font-size: 2rem;
   margin-left: 1rem;
   margin-top: 4rem;
+`;
+
+export const Sli12 = styled.p`
+  margin-left: 0rem;
+  margin-top: 2rem;
+  background: var(--#11111b);
+  padding: 5px;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 80%;
 `;

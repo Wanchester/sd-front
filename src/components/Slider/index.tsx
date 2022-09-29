@@ -3,7 +3,7 @@ import SliderItem from "./SliderItem";
 import { StyledSliderWrapper, StyledSlider } from "./SliderStyles";
 
 type SliderProps = {
-  children?: any[]; // eslint-disable-line
+  children?: React.ReactNode; // eslint-disable-line
   zoomFactor: number;
   slideMargin: number;
   maxVisibleSlides: number;
@@ -33,7 +33,7 @@ const Slider: React.FC<SliderProps> = ({
   const visibleSlides = numberOfSlides(maxVisibleSlides, scrollSize);
 
   const totalPages: number =
-    Math.ceil((children ?? []).length / visibleSlides) - 1;
+    Math.ceil(React.Children.count(children) / visibleSlides) - 1;
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -94,7 +94,7 @@ const Slider: React.FC<SliderProps> = ({
         pageTransition={pageTransition}
         ref={sliderRef}
       >
-        {children?.map((child, i) => (
+        {React.Children.map(children, (child, i) => (
           <SliderItem
             key={i}
             slideMargin={slideMargin}
