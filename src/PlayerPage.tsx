@@ -40,8 +40,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
                 <Breadcrumbs />
               </Row>
               <Row>
-                <h1 className="py-4 mb-0">{playerName}</h1>
-                <hr />
+                <h1 className="py-4 mb-0">{player?.name}</h1>
               </Row>
               <Row>
                 <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>

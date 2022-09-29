@@ -11,7 +11,11 @@ const DropDownButton = ({
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   useEffect(() => {
-    setOptions(["All", ...optionList]);
+    if (optionList.length !== 1) {
+      setOptions(["All", ...optionList]);
+    } else {
+      setOptions(optionList);
+    }
   }, [optionList]);
 
   return (

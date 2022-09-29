@@ -47,7 +47,7 @@ const App = () => {
             <Route path="/session/:sessionName" element={<SessionPage />} />
             <Route
               path="/statistics/:playerName"
-              element={<StatisticPage player={loggedIn} />}
+              element={<StatisticPage user={loggedIn} />}
             />
             <Route path="*" element={<HomePage player={loggedIn} />} />
           </Routes>

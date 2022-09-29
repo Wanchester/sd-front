@@ -7,7 +7,6 @@ const TrainingSession = ({
 }: {
   trainingList: ProfileResponse["trainingSessions"];
 }) => {
-  console.log(trainingList);
   return (
     <Table responsive bordered variant="dark" className="table-condensed mb-0">
       <Row>

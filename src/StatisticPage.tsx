@@ -4,13 +4,29 @@ import { useParams } from "react-router-dom";
 import DropDownButton from "./components/dropDownButton/DropDownButton";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
-import { useState } from "react";
-import { ProfileResponse } from "./API";
+import { useEffect, useState } from "react";
+import apiMethods, { ProfileResponse } from "./API";
 
-const StatisticPage = ({ player }: { player: ProfileResponse }) => {
+const StatisticPage = ({ user }: { user: ProfileResponse }) => {
   const { playerName } = useParams();
-  const [teams, setTeams] = useState(player.teams);
+  const [player, setPlayer] = useState(null as ProfileResponse | null);
+  const [teams, setTeams] = useState(null as ProfileResponse["teams"] | null);
+  const [selectedTeam, setSelectedTeam] = useState([] as string[] | null);
 
+  const checkExist = (team: string) => {
+    if (user) return user.teams.includes(team);
+  };
+  useEffect(() => {
+    if (playerName && user.role === "coach") {
+      apiMethods.getPlayer(playerName).then((p) => setPlayer(p));
+    } else setPlayer(user);
+  }, [playerName, user]);
+  useEffect(() => {
+    if (player) {
+      setTeams(player.teams);
+      setSelectedTeam(teams);
+    }
+  }, [player, teams]);
   return (
     <>
       <Container fluid>
@@ -23,27 +39,34 @@ const StatisticPage = ({ player }: { player: ProfileResponse }) => {
       </Row>
       <Table responsive bordered>
         <Row>
-          {playerName && (
+          {player && selectedTeam && (
             <GraphContainer
               isComposed={true}
-              teamReq={teams}
-              nameReq={[playerName]}
+              teamReq={selectedTeam.filter((team) => checkExist(team))}
+              nameReq={[player.name]}
             />
           )}
         </Row>
         <Row sm={3} md={3} lg={3} xl={3}>
-          <DropDownButton
-            optionList={player.teams}
-            setValue={(data: string[]) => {
-              setTeams(data);
-            }}
-          />
+          {teams && (
+            <DropDownButton
+              optionList={teams.filter((team) => checkExist(team))}
+              setValue={(data: string[]) => {
+                setSelectedTeam(data);
+              }}
+            />
+          )}
         </Row>
       </Table>
       <Table responsive bordered>
-        {playerName && (
+        {player && (
           <Row>
-            <GraphContainer teamReq={teams} nameReq={[playerName]} />
+            {teams && (
+              <GraphContainer
+                teamReq={teams.filter((team) => checkExist(team))}
+                nameReq={[player.name]}
+              />
+            )}
           </Row>
         )}
       </Table>
