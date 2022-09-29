@@ -18,6 +18,7 @@ const GraphContainer = (props: GraphContainerProps) => {
   const [selectedField, setSelectedField] = useState(null as string | null);
   useEffect(() => {
     if (props.isComposed) {
+      console.log(props.nameReq, props.sessionReq, props.teamReq);
       apiMethods
         .getCombinationGraphStatistic(
           props.teamReq || [],
@@ -85,6 +86,7 @@ const GraphContainer = (props: GraphContainerProps) => {
           ]
         : [
             {
+              type: "bar",
               data: Object.fromEntries(
                 Object.entries(data as StatisticData).map((entry) => [
                   entry[0],

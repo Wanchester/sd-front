@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -6,10 +5,6 @@ const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let currentRoutes = [];
-  useEffect(() => {
-    console.log(navigate);
-    console.log(location);
-  }, [navigate, location]);
   currentRoutes = location.pathname !== "/" ? location.pathname.split("/") : [];
   if (currentRoutes.length > 0) {
     currentRoutes.shift();

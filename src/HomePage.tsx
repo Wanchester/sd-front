@@ -67,7 +67,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
       </Row>
       <Row>
         <Col md={{ span: 7, offset: 2 }}>
-          <TrainingSession userList={player} />
+          <TrainingSession trainingList={player.trainingSessions} />
         </Col>
       </Row>
     </Container>

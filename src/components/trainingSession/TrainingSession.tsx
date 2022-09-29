@@ -2,7 +2,11 @@ import { Table, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ProfileResponse } from "../../API";
 
-const TrainingSession = ({ userList }: { userList: ProfileResponse }) => {
+const TrainingSession = ({
+  trainingList,
+}: {
+  trainingList: ProfileResponse["trainingSessions"];
+}) => {
   return (
     <Table responsive bordered variant="dark" className="table-condensed mb-0">
       <Row>
@@ -22,16 +26,14 @@ const TrainingSession = ({ userList }: { userList: ProfileResponse }) => {
           Session Duration
         </Col>
       </Row>
-      {userList.trainingSessions &&
-        userList.trainingSessions.map((session) => {
+      {trainingList &&
+        trainingList.map((session) => {
           return (
             <>
               <Row className="responsive">
                 <Col xs={2} md={2} lg={2} xl={2}>
                   <Link
-                    to={`/session/${encodeURIComponent(session.sessionName)}/${
-                      session.teamName
-                    }`}
+                    to={`/session/${encodeURIComponent(session.sessionName)}`}
                   >
                     {session.sessionName}
                   </Link>

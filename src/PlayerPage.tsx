@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   const { playerName } = useParams();
   const [player, setPlayer] = useState(null as ProfileResponse | null);
+
   const [error, setError] = useState("");
   useEffect(() => {
     if (playerName)
@@ -24,12 +25,13 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
         .catch((e) => {
           setError(e.response.data.error);
         });
-  }, [playerName]);
+  });
+  const checkExist = (team: string) => {
+    return user.teams.includes(team);
+  };
+
   return (
     <>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
       {user && (
         <>
           {user.role !== "player" ? (
@@ -38,8 +40,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
                 <Breadcrumbs />
               </Row>
               <Row>
-                <h1 className="py-4 mb-0">{playerName}</h1>
-                <hr />
+                <h1 className="py-4 mb-0">{player?.name}</h1>
               </Row>
               <Row>
                 <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
@@ -59,7 +60,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
                   lg={2}
                   xl={3}
                 >
-                  <Link to={`/statistic/${playerName}`}>
+                  <Link to={`/statistics/${playerName}`}>
                     <Button>{playerName} statistics</Button>
                   </Link>
                 </Col>
@@ -81,7 +82,13 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
               </Row>
               <Row>
                 <Col md={{ span: 7, offset: 2 }}>
-                  {player && <TrainingSession userList={player} />}
+                  {player && (
+                    <TrainingSession
+                      trainingList={player.trainingSessions.filter((session) =>
+                        checkExist(session.teamName)
+                      )}
+                    />
+                  )}
                 </Col>
               </Row>
             </Container>
