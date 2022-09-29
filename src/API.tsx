@@ -62,7 +62,6 @@ const influxFields = [
 ] as const;
 export type InfluxField = typeof influxFields[number];
 
-
 export interface StatisticData {
   [playerName: string]: {
     //these are InfluxFields
