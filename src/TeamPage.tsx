@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Table, Tab } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import Slider from "./components/Slider";
 import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import GraphContainer from "./components/graphContainer/GraphContainer";
@@ -98,10 +98,14 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
       });
     if (teamName) {
       apiMethods
-        .getTrainingSession([], [teamName], [])
+        .getTrainingSession(
+          player.role === "player" ? [player.name] : undefined,
+          [teamName],
+          []
+        )
         .then((session) => setTeamSession(session));
     }
-  }, [teamName]);
+  }, [teamName, player.name, player.role]);
 
   if (playerList && playerList.players.length < 1) return <div>Loading </div>;
 
@@ -152,11 +156,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
           <Table responsive bordered className="justify-content-md-center">
             <Row className="col-md-8 offset-md-1">
               {teamName && playerNames && (
-                <GraphContainer
-                  teamReq={[teamName]}
-                  nameReq={playerNames}
-                  isComposed={true}
-                />
+                <GraphContainer teamReq={[teamName]} isComposed={true} />
               )}
             </Row>
             <Row className="col-md-8 offset-md-1">

@@ -18,7 +18,6 @@ export interface ProfileResponse {
     duration: string;
   }[];
 }
-
 export interface Credential {
   username: string;
   password: string;

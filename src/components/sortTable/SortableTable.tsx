@@ -1,10 +1,10 @@
 import { MouseEventHandler, useCallback, useState } from "react";
-import data from "./data.json";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import JSONData from "./data.json";
+// import { Container, Row, Button, Col } from "react-bootstrap";
 import { NavS } from "./SortableTable.Styles";
 import Table from "react-bootstrap/Table";
 
-type Data = typeof data;
+type Data = typeof JSONData;
 
 type SortKeys = keyof Data[0];
 
@@ -21,7 +21,7 @@ function sortData({
 }) {
   if (!sortKey) return tableData;
 
-  const sortedData = data.sort((a, b) => {
+  const sortedData = JSONData.sort((a, b) => {
     return a[sortKey] > b[sortKey] ? 1 : -1;
   });
 

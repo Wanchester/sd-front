@@ -21,9 +21,9 @@ const GraphContainer = (props: GraphContainerProps) => {
       console.log(props.nameReq, props.sessionReq, props.teamReq);
       apiMethods
         .getCombinationGraphStatistic(
-          props.teamReq || [],
-          props.nameReq || [],
-          props.sessionReq || []
+          props.teamReq || undefined,
+          props.nameReq || undefined,
+          props.sessionReq || undefined
         )
         .then((d) => {
           setData(d);

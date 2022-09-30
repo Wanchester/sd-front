@@ -5,7 +5,7 @@ import { Table, Col } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
 
-const SessionPage = () => {
+const SessionPage = ({ user }: { user: ProfileResponse }) => {
   const { sessionName } = useParams();
   const [trainingSession, setTrainingSession] = useState(
     null as ProfileResponse["trainingSessions"] | null
@@ -15,7 +15,11 @@ const SessionPage = () => {
   useEffect(() => {
     if (sessionName) {
       apiMethods
-        .getTrainingSession([], [], [sessionName])
+        .getTrainingSession(
+          user.role === "player" ? undefined : [],
+          [],
+          [sessionName]
+        )
         .then((session) => {
           setTrainingSession(session);
         })
@@ -24,7 +28,7 @@ const SessionPage = () => {
           setError(e.response.data.error);
         });
     }
-  }, [sessionName]);
+  }, [sessionName, user.name, user.role]);
   return (
     <>
       {sessionName && (

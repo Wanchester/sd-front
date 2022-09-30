@@ -1,7 +1,7 @@
 import Table from "react-bootstrap/Table";
 import { Whatever3, Whatever1, Whatever2 } from "./Table2.styles";
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { StatsInterface } from "../../TeamPage";
 
 const TableA = ({ stats }: { stats: StatsInterface }) => {
