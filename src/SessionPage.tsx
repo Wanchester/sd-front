@@ -5,12 +5,18 @@ import { Table, Col } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
 
+export interface TableData {
+  playerName: string;
+  [key: string]: string | number;
+}
+
 const SessionPage = ({ user }: { user: ProfileResponse }) => {
   const { sessionName } = useParams();
   const [trainingSession, setTrainingSession] = useState(
     null as ProfileResponse["trainingSessions"] | null
   );
   const [error, setError] = useState("");
+  const [playerData, setPlayerData] = useState(null as TableData[] | null);
 
   useEffect(() => {
     if (sessionName) {
@@ -29,6 +35,31 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
         });
     }
   }, [sessionName, user.name, user.role]);
+
+  useEffect(() => {
+    const tableData: TableData[] = [];
+    if (sessionName) {
+      apiMethods
+        .getLineGraphStatistic(
+          undefined,
+          undefined,
+          [sessionName],
+          undefined,
+          undefined
+        )
+        .then((data) =>
+          Object.entries(data).map((entry) => {
+            tableData.push({
+              playerName: entry[0],
+              ...Object.fromEntries(
+                Object.entries(entry[1]).map((arr) => [arr[0], arr[1][1]])
+              ),
+            });
+          })
+        );
+      if (tableData) setPlayerData(tableData);
+    }
+  }, [playerData, sessionName]);
   return (
     <>
       {sessionName && (
@@ -47,6 +78,11 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
               <h2>{s.duration}</h2>
             </>;
           })}
+          <Table responsive bordered>
+            {sessionName && (
+              <GraphContainer isLine={true} sessionReq={[sessionName]} />
+            )}
+          </Table>
 
           <Table responsive bordered>
             {sessionName && <GraphContainer sessionReq={[sessionName]} />}
