@@ -8,6 +8,7 @@ export interface GraphContainerProps {
   nameReq?: string[];
   sessionReq?: string[];
   isComposed?: boolean;
+  isLine?: boolean;
 }
 
 const GraphContainer = (props: GraphContainerProps) => {
@@ -21,9 +22,9 @@ const GraphContainer = (props: GraphContainerProps) => {
       console.log(props.nameReq, props.sessionReq, props.teamReq);
       apiMethods
         .getCombinationGraphStatistic(
-          props.teamReq || [],
-          props.nameReq || [],
-          props.sessionReq || []
+          props.teamReq || undefined,
+          props.nameReq || undefined,
+          props.sessionReq || undefined
         )
         .then((d) => {
           setData(d);
@@ -43,7 +44,9 @@ const GraphContainer = (props: GraphContainerProps) => {
         .getLineGraphStatistic(
           props.teamReq || [],
           props.nameReq || [],
-          props.sessionReq || []
+          props.sessionReq || [],
+          undefined,
+          props.isLine ? 1000 : undefined
         )
         .then((d) => {
           setData(d);
@@ -59,7 +62,41 @@ const GraphContainer = (props: GraphContainerProps) => {
           setSelectedField(newFields[0] || null);
         });
     }
-  }, [props.teamReq, props.nameReq, props.sessionReq, props.isComposed]);
+  }, [
+    props.teamReq,
+    props.nameReq,
+    props.sessionReq,
+    props.isComposed,
+    props.isLine,
+  ]);
+  /**
+   * {
+   *  A : {
+   *   V : [string, number],
+   *   H : [string, number]
+   * }
+
+   * }
+   * =>
+   * {
+   *  playerName: A
+   *  V: number,
+   *  H: number
+   * }
+   */
+  //   ...Object.fromEntries(Object.entries(entry[1]).map((item) => {
+  //     for (const property in item) {
+  //         if (Array.isArray(item[property])) {
+  //             if (item[property].length > 0 ) {
+  //             item[property] = item[property][item[property].length-1];
+  //             } else {
+  //                 item[property] = 0;
+  //             }
+  //         }
+
+  //     }
+  //     return item;
+  // }))
 
   const processedData = (
     data && selectedField
@@ -86,7 +123,7 @@ const GraphContainer = (props: GraphContainerProps) => {
           ]
         : [
             {
-              type: "bar",
+              type: props.isLine ? "line" : "bar",
               data: Object.fromEntries(
                 Object.entries(data as StatisticData).map((entry) => [
                   entry[0],
@@ -133,7 +170,12 @@ const GraphContainer = (props: GraphContainerProps) => {
                   </Tab.Content>
                 ) : (
                   <Tab.Content>
-                    {<BaseChart flip={true} graphs={processedData} />}
+                    {
+                      <BaseChart
+                        flip={props.isLine ? false : true}
+                        graphs={processedData}
+                      />
+                    }
                   </Tab.Content>
                 )}
               </Col>

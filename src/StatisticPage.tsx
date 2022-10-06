@@ -1,9 +1,9 @@
 import Sidebar from "./components/Nav/Sidebar";
-import { Container, Row, Table } from "react-bootstrap";
+import { Container, Row, Table, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import DropDownButton from "./components/dropDownButton/DropDownButton";
 import GraphContainer from "./components/graphContainer/GraphContainer";
-import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
+import Header from "./components/header/Header";
 import { useEffect, useState } from "react";
 import apiMethods, { ProfileResponse } from "./API";
 
@@ -34,9 +34,11 @@ const StatisticPage = ({ user }: { user: ProfileResponse }) => {
           <Sidebar />
         </Row>
       </Container>
-      <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-        <Breadcrumbs />
-      </Row>
+      {player && (
+        <Col>
+          <Header content={player.name} />
+        </Col>
+      )}
       <Table responsive bordered>
         <Row>
           {player && selectedTeam && (

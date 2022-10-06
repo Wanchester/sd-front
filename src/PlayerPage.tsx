@@ -4,7 +4,7 @@ import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import Teams from "./components/teams/Teams";
 import TrainingSession from "./components/trainingSession/TrainingSession";
-import Breadcrumbs from "./components/breadcrumbs/Breadcrumbs";
+import Header from "./components/header/Header";
 
 import apiMethods, { ProfileResponse } from "./API";
 import { Link, useParams } from "react-router-dom";
@@ -36,12 +36,11 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
         <>
           {user.role !== "player" ? (
             <Container fluid>
-              <Row className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
-                <Breadcrumbs />
-              </Row>
-              <Row>
-                <h1 className="py-4 mb-0">{player?.name}</h1>
-              </Row>
+              {player && (
+                <Col>
+                  <Header content={player.name} />
+                </Col>
+              )}
               <Row>
                 <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
                   <div className="w-100 border-end">

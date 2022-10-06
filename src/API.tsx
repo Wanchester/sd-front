@@ -18,7 +18,6 @@ export interface ProfileResponse {
     duration: string;
   }[];
 }
-
 export interface Credential {
   username: string;
   password: string;
@@ -152,7 +151,8 @@ const apiMethods = {
     teamReq?: string[],
     nameReq?: string[],
     sessionReq?: string[],
-    funcReq?: string
+    funcReq?: string,
+    every?: number
   ) => {
     return axios
       .post("/api/lineGraph", {
@@ -160,8 +160,7 @@ const apiMethods = {
         names: nameReq, //[]
         teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
-        aggregate: { func: funcReq || "mean" }, // funcReq default to average
-        // time_window: { func: funcReq || "mean" },
+        aggregate: { func: funcReq || "mean", every: every || 86400 }, // funcReq default to average
       })
       .then((response) => response.data as StatisticData);
   },
