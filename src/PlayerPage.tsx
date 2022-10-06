@@ -1,4 +1,4 @@
-import { Container, Row, Button, Col } from "react-bootstrap";
+import { Container, Row, Button, Col, Spinner } from "react-bootstrap";
 
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
@@ -31,16 +31,15 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   };
 
   return (
-    <>
-      {user && (
+    <Container fluid>
+      {player ? (
         <>
           {user.role !== "player" ? (
-            <Container fluid>
-              {player && (
-                <Col>
-                  <Header content={player.name} />
-                </Col>
-              )}
+            <Container>
+              <Col>
+                <Header content={player.name} />
+              </Col>
+
               <Row>
                 <Col className="flex-grow-1" sm={6} md={4} lg={3} xl={2}>
                   <div className="w-100 border-end">
@@ -92,13 +91,15 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
               </Row>
             </Container>
           ) : (
-            <>
-              <p>{error}</p>
-            </>
+            <>{error}</>
           )}
         </>
+      ) : (
+        <Container className="h-100 w-100 d-flex justify-content-center">
+          <Spinner animation="border" variant="light" />
+        </Container>
       )}
-    </>
+    </Container>
   );
 };
 export default PlayerPage;
