@@ -1,9 +1,9 @@
 import { MouseEventHandler, useCallback, useState } from "react";
-import { ProfileResponse } from "../../API";
 import { NavS } from "./SortableTableModified.Styles";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
-type Data = ProfileResponse["trainingSessions"];
+
+type Data = Record<string, string | number>[];
 
 type SortKeys = keyof Data[0];
 
@@ -56,33 +56,37 @@ function SortButton({
   );
 }
 
-function SortableTableModified({
-  data,
-  header,
-}: {
+export interface TableData {
   data: Data;
   header: { key: SortKeys; label: string }[];
-}) {
-  const [sortKey, setSortKey] = useState<SortKeys>("sessionName");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+  link?: string;
+  linkList?: string[];
+}
 
+const SortableTableModified = (props: TableData) => {
+  const [sortKey, setSortKey] = useState<SortKeys>(Object.keys(props.data)[0]);
+  const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
   const sortedData = useCallback(
-    () => sortData({ tableData: data, sortKey, reverse: sortOrder === "desc" }),
-    [data, sortKey, sortOrder]
+    () =>
+      sortData({
+        tableData: props.data,
+        sortKey,
+        reverse: sortOrder === "desc",
+      }),
+    [props.data, sortKey, sortOrder]
   );
 
   function changeSort(key: SortKeys) {
     setSortOrder(sortOrder === "ascn" ? "desc" : "ascn");
-
     setSortKey(key);
   }
-
+  console.log(props.data);
   return (
     <NavS>
       <Table className="table table-dark table-striped">
         <thead>
           <tr>
-            {header.map((row) => {
+            {props.header.map((row) => {
               return (
                 <td key={row.key}>
                   {row.label}{" "}
@@ -102,22 +106,30 @@ function SortableTableModified({
         <tbody>
           {sortedData().map((session) => {
             return (
-              <tr key={session.sessionName}>
-                <td>
-                  <Link
-                    to={`/session/${encodeURIComponent(session.sessionName)}`}
-                  >
-                    {session.sessionName}
-                  </Link>
-                </td>
-                <td>{session.sessionStart}</td>
-                <td>{session.sessionStop}</td>
-                <td>
-                  <Link to={`/team/${session.teamName}`}>
-                    {session.teamName}
-                  </Link>
-                </td>
-                <td>{session.duration}</td>
+              <tr key={Object.keys(session)[0]}>
+                <>
+                  {Object.keys(session).map((key) => {
+                    if (
+                      props.link &&
+                      props.linkList &&
+                      props.linkList.includes(key)
+                    ) {
+                      return (
+                        <td>
+                          <Link
+                            to={`/${props.link}/${encodeURIComponent(
+                              session[key]
+                            )}`}
+                          >
+                            {session[key]}
+                          </Link>
+                        </td>
+                      );
+                    } else {
+                      return <td>{session[key]}</td>;
+                    }
+                  })}
+                </>
               </tr>
             );
           })}
@@ -125,6 +137,6 @@ function SortableTableModified({
       </Table>
     </NavS>
   );
-}
+};
 
 export default SortableTableModified;

@@ -10,7 +10,6 @@ import TeamPage from "./TeamPage";
 import SessionPage from "./SessionPage";
 import PlayerPage from "./PlayerPage";
 import apiMethods, { ProfileResponse } from "./API";
-// import ErrorPage from "./ErrorPage";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(

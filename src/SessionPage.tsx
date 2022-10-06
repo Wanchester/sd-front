@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { ProfileResponse } from "./API";
-import { Table, Col } from "react-bootstrap";
+import { Table, Col, Container } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
+import SortableTableModified from "./components/sortTableModified/SortableTableModified";
 
 export interface TableData {
   playerName: string;
@@ -16,7 +17,9 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
     null as ProfileResponse["trainingSessions"] | null
   );
   const [error, setError] = useState("");
-  const [playerData, setPlayerData] = useState(null as TableData[] | null);
+  const [playerData, setPlayerData] = useState(
+    null as Record<string, string | number>[] | null
+  );
 
   useEffect(() => {
     if (sessionName) {
@@ -37,29 +40,38 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
   }, [sessionName, user.name, user.role]);
 
   useEffect(() => {
-    const tableData: TableData[] = [];
+    const tableData: Record<string, string | number>[] = [];
     if (sessionName) {
       apiMethods
-        .getLineGraphStatistic(
-          undefined,
-          undefined,
-          [sessionName],
-          undefined,
-          undefined
-        )
-        .then((data) =>
+        .getLineGraphStatistic([], [], [sessionName], undefined, undefined)
+        .then((data) => {
+          console.log(data);
           Object.entries(data).map((entry) => {
             tableData.push({
               playerName: entry[0],
               ...Object.fromEntries(
-                Object.entries(entry[1]).map((arr) => [arr[0], arr[1][1]])
+                Object.entries(entry[1]).map((arr) => [
+                  arr[0],
+                  arr[1].length > 0
+                    ? arr[1].map((val) => {
+                        if (val) {
+                          return val[1];
+                        } else {
+                          return 0;
+                        }
+                      })
+                    : 0,
+                ])
               ),
             });
-          })
-        );
-      if (tableData) setPlayerData(tableData);
+            console.log(tableData);
+          });
+        });
+
+      setPlayerData(tableData);
     }
-  }, [playerData, sessionName]);
+  }, [sessionName]);
+
   return (
     <>
       {sessionName && (
@@ -87,6 +99,19 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
           <Table responsive bordered>
             {sessionName && <GraphContainer sessionReq={[sessionName]} />}
           </Table>
+          <Container fluid>
+            {playerData && (
+              <SortableTableModified
+                data={playerData}
+                header={[
+                  { key: "playerName", label: "Player Name" },
+                  { key: "Velocity", label: "Velocity" },
+                  { key: "Distance", label: "Distance" },
+                  { key: "Height", label: "Height" },
+                ]}
+              />
+            )}
+          </Container>
         </>
       ) : (
         <>{error}</>
