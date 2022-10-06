@@ -52,7 +52,15 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
               ...Object.fromEntries(
                 Object.entries(entry[1]).map((arr) => [
                   arr[0],
-                  arr[1][1] ? arr[1][1] : 0,
+                  arr[1].length > 0
+                    ? arr[1].map((val) => {
+                        if (val) {
+                          return val[1];
+                        } else {
+                          return 0;
+                        }
+                      })
+                    : 0,
                 ])
               ),
             });
