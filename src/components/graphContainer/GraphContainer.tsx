@@ -69,34 +69,6 @@ const GraphContainer = (props: GraphContainerProps) => {
     props.isComposed,
     props.isLine,
   ]);
-  /**
-   * {
-   *  A : {
-   *   V : [string, number],
-   *   H : [string, number]
-   * }
-
-   * }
-   * =>
-   * {
-   *  playerName: A
-   *  V: number,
-   *  H: number
-   * }
-   */
-  //   ...Object.fromEntries(Object.entries(entry[1]).map((item) => {
-  //     for (const property in item) {
-  //         if (Array.isArray(item[property])) {
-  //             if (item[property].length > 0 ) {
-  //             item[property] = item[property][item[property].length-1];
-  //             } else {
-  //                 item[property] = 0;
-  //             }
-  //         }
-
-  //     }
-  //     return item;
-  // }))
 
   const processedData = (
     data && selectedField

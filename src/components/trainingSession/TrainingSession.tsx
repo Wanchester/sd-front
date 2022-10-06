@@ -19,6 +19,8 @@ const TrainingSession = ({
           { key: "teamName", label: "Team Name" },
           { key: "duration", label: "Duration" },
         ]}
+        link="session"
+        linkList={["sessionName"]}
       />
     </Container>
   );
