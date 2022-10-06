@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { ProfileResponse } from "./API";
-import { Table, Col, Container } from "react-bootstrap";
+import { Table, Col, Container, Spinner } from "react-bootstrap";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
 import SortableTableModified from "./components/sortTableModified/SortableTableModified";
@@ -73,50 +73,56 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
   }, [sessionName]);
 
   return (
-    <>
-      {sessionName && (
-        <Col>
-          <Header content={sessionName} />
-        </Col>
-      )}
-      {trainingSession ? (
+    <Container fluid>
+      {trainingSession && playerData ? (
         <>
-          {trainingSession.map((s) => {
+          {sessionName && (
+            <Col>{sessionName && <Header content={sessionName} />}</Col>
+          )}
+          {trainingSession ? (
             <>
-              <h1>{s.sessionName}</h1>
-              <h2>{s.sessionStart}</h2>
-              <h2>{s.sessionStop}</h2>
-              <h2>{s.teamName}</h2>
-              <h2>{s.duration}</h2>
-            </>;
-          })}
-          <Table responsive bordered>
-            {sessionName && (
-              <GraphContainer isLine={true} sessionReq={[sessionName]} />
-            )}
-          </Table>
+              {trainingSession.map((s) => {
+                <>
+                  <h1>{s.sessionName}</h1>
+                  <h2>{s.sessionStart}</h2>
+                  <h2>{s.sessionStop}</h2>
+                  <h2>{s.teamName}</h2>
+                  <h2>{s.duration}</h2>
+                </>;
+              })}
+              <Table responsive bordered>
+                {sessionName && (
+                  <GraphContainer isLine={true} sessionReq={[sessionName]} />
+                )}
+              </Table>
 
-          <Table responsive bordered>
-            {sessionName && <GraphContainer sessionReq={[sessionName]} />}
-          </Table>
-          <Container fluid>
-            {playerData && (
-              <SortableTableModified
-                data={playerData}
-                header={[
-                  { key: "playerName", label: "Player Name" },
-                  { key: "Velocity", label: "Velocity" },
-                  { key: "Distance", label: "Distance" },
-                  { key: "Height", label: "Height" },
-                ]}
-              />
-            )}
-          </Container>
+              <Table responsive bordered>
+                {sessionName && <GraphContainer sessionReq={[sessionName]} />}
+              </Table>
+              <Container fluid>
+                {playerData && (
+                  <SortableTableModified
+                    data={playerData}
+                    header={[
+                      { key: "playerName", label: "Player Name" },
+                      { key: "Velocity", label: "Velocity" },
+                      { key: "Distance", label: "Distance" },
+                      { key: "Height", label: "Height" },
+                    ]}
+                  />
+                )}
+              </Container>
+            </>
+          ) : (
+            <>{error}</>
+          )}
         </>
       ) : (
-        <>{error}</>
+        <Container className="h-100 w-100 d-flex justify-content-center">
+          <Spinner animation="border" variant="light" />
+        </Container>
       )}
-    </>
+    </Container>
   );
 };
 export default SessionPage;

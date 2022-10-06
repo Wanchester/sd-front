@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
+import { Nav, Tab, Row, Col, Container, Spinner } from "react-bootstrap";
 import BaseChart, { ChartProps } from "../charts/BaseChart";
 import apiMethods, { CombinationGraphResponse, StatisticData } from "../../API";
 
@@ -153,7 +153,7 @@ const GraphContainer = (props: GraphContainerProps) => {
               </Col>
             </>
           ) : (
-            <p>Loading...</p>
+            <Spinner animation="border" variant="light" />
           )}
         </Row>
       </Tab.Container>
