@@ -3,7 +3,6 @@ import { ProfileResponse } from "../../API";
 import { NavS } from "./SortableTableModified.Styles";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
-import TableData from "../../SessionPage";
 type Data = ProfileResponse["trainingSessions"];
 
 type SortKeys = keyof Data[0];
