@@ -49,6 +49,12 @@ export interface ChartProps {
      */
     type?: "bar" | "line";
   }[];
+
+  /**
+   * Whether to sort all categories on the X-axis.
+   * Default to `false`.
+   */
+  sortXAxis?: boolean;
 }
 
 export default function BaseChart(props: ChartProps) {
@@ -60,6 +66,7 @@ export default function BaseChart(props: ChartProps) {
     type: "line",
     ...graph,
   }));
+  const sortXAxis = props.sortXAxis || false;
 
   const data = Object.values(
     graphs
@@ -89,6 +96,10 @@ export default function BaseChart(props: ChartProps) {
         return prev;
       }, {} as Record<string, Record<string, string | number>>)
   );
+
+  if (sortXAxis) {
+    data.sort((a, b) => String(a.x).localeCompare(b.x as string));
+  }
 
   return (
     <Container style={{ background: "#fffdfa" }}>

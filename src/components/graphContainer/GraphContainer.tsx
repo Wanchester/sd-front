@@ -146,6 +146,7 @@ const GraphContainer = (props: GraphContainerProps) => {
                       <BaseChart
                         flip={props.isLine ? false : true}
                         graphs={processedData}
+                        sortXAxis={true}
                       />
                     }
                   </Tab.Content>
