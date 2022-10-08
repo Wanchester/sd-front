@@ -1,5 +1,6 @@
-import { Container, Row, Button, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Button, Col } from "react-bootstrap";
 
+import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
 import Teams from "./components/teams/Teams";
@@ -8,7 +9,7 @@ import Header from "./components/header/Header";
 
 import apiMethods, { ProfileResponse } from "./API";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   const { playerName } = useParams();
@@ -37,7 +38,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           {user.role !== "player" ? (
             <Container>
               <Col>
-                <Header content={player.name} />
+                <Header content={player.name} userRole={user.role} />
               </Col>
 
               <Row>
@@ -95,9 +96,7 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           )}
         </>
       ) : (
-        <Container className="h-100 w-100 d-flex justify-content-center">
-          <Spinner animation="border" variant="light" />
-        </Container>
+        <LoadingSpinner />
       )}
     </Container>
   );

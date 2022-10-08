@@ -1,5 +1,6 @@
 import Sidebar from "./components/Nav/Sidebar";
-import { Container, Row, Table, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Table, Col } from "react-bootstrap";
+import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import { useParams } from "react-router-dom";
 import DropDownButton from "./components/dropDownButton/DropDownButton";
 import GraphContainer from "./components/graphContainer/GraphContainer";
@@ -42,11 +43,10 @@ const StatisticPage = ({ user }: { user: ProfileResponse }) => {
               <Sidebar />
             </Row>
           </Container>
-          {player && (
-            <Col>
-              <Header content={player.name} />
-            </Col>
-          )}
+          <Col>
+            <Header content={player.name} userRole={user.role} />
+          </Col>
+
           <Table responsive bordered>
             <Row>
               {player && selectedTeam && (
@@ -81,13 +81,11 @@ const StatisticPage = ({ user }: { user: ProfileResponse }) => {
             )}
           </Table>
         </>
-      ) : (
+      ) : error ? (
         <>{error}</>
+      ) : (
+        <LoadingSpinner />
       )}
-
-      <Container className="h-100 w-100 d-flex justify-content-center">
-        <Spinner animation="border" variant="light" />
-      </Container>
     </Container>
   );
 };

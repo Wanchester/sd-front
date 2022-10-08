@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { ProfileResponse } from "./API";
-import { Table, Col, Container, Spinner } from "react-bootstrap";
+import { Table, Col, Container } from "react-bootstrap";
+import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
 import SortableTableModified from "./components/sortTableModified/SortableTableModified";
@@ -77,7 +78,11 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
       {trainingSession && playerData ? (
         <>
           {sessionName && (
-            <Col>{sessionName && <Header content={sessionName} />}</Col>
+            <Col>
+              {sessionName && (
+                <Header content={sessionName} userRole={user.role} />
+              )}
+            </Col>
           )}
           {trainingSession ? (
             <>
@@ -118,9 +123,7 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
           )}
         </>
       ) : (
-        <Container className="h-100 w-100 d-flex justify-content-center">
-          <Spinner animation="border" variant="light" />
-        </Container>
+        <LoadingSpinner />
       )}
     </Container>
   );
