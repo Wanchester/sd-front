@@ -1,4 +1,4 @@
-import { Container, Row, Button, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Button, Col } from "react-bootstrap";
 
 import Avatar from "./components/avatar/Avatar";
 import UserDescription from "./components/userDescription/UserDescription";
@@ -6,33 +6,18 @@ import Teams from "./components/teams/Teams";
 import TrainingSession from "./components/trainingSession/TrainingSession";
 import Header from "./components/header/Header";
 
-import apiMethods, { ProfileResponse } from "./API";
+import { ProfileResponse } from "./API";
 import { Link } from "react-router-dom";
 
-const HomePage = ({ player }: { player: ProfileResponse }) => {
-  const teamsList = player.teams;
+const HomePage = ({ user }: { user: ProfileResponse }) => {
+  const teamsList = user.teams;
   return (
     <>
-      {player ? (
+      {user && (
         <Container fluid>
-          <Row className="flex-grow-1 m-0" sm={6} md={4} lg={3} xl={2}>
-            <Col sm={10} md={10} lg={10} xl={10}>
-              <Header content={"Home"} />
-            </Col>
-            <Col sm={6} md={4} lg={3} xl={2}>
-              <Container fluid>
-                <Button
-                  className="btn btn-secondary btn-small align-text-top"
-                  href="#"
-                  onClick={async (event) => {
-                    event.preventDefault();
-                    await apiMethods.logOut();
-                    window.location.reload();
-                  }}
-                >
-                  Logout
-                </Button>
-              </Container>
+          <Row className="flex-grow-1 m-0">
+            <Col>
+              <Header content={"Home"} userRole={user.role} />
             </Col>
           </Row>
           <Row>
@@ -42,7 +27,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
               </div>
             </Col>
             <Col className="flex-grow-1" sm={6} md={7} lg={7} xl={7}>
-              <UserDescription userList={player} isPlayer={true} />
+              <UserDescription userList={user} isPlayer={true} />
             </Col>
             <Col
               className="d-flex flex-direction: column flex-grow-1 justify-content-right align-self-end"
@@ -51,8 +36,8 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
               lg={2}
               xl={3}
             >
-              {player.role === "player" && (
-                <Link to={`/statistics/${player.name}`}>
+              {user.role === "player" && (
+                <Link to={`/statistics/${user.name}`}>
                   <Button>My statistics</Button>
                 </Link>
               )}
@@ -65,7 +50,7 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           </Row>
           <Row>
             <Col md={{ span: 7, offset: 2 }}>
-              <Teams teamsList={teamsList} user={player} />
+              <Teams teamsList={teamsList} user={user} />
             </Col>
           </Row>
           <Row className="pt-4">
@@ -75,12 +60,10 @@ const HomePage = ({ player }: { player: ProfileResponse }) => {
           </Row>
           <Row>
             <Col md={{ span: 7, offset: 2 }}>
-              <TrainingSession trainingList={player.trainingSessions} />
+              <TrainingSession trainingList={user.trainingSessions} />
             </Col>
           </Row>{" "}
         </Container>
-      ) : (
-        <Spinner animation="border" variant="light" />
       )}
     </>
   );
