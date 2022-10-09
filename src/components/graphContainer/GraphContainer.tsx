@@ -138,7 +138,17 @@ const GraphContainer = (props: GraphContainerProps) => {
                 {props.isComposed ? (
                   //to be completed
                   <Tab.Content>
-                    {selectedField && <BaseChart graphs={processedData} />}
+                    {selectedField && (
+                      <BaseChart
+                        graphs={processedData}
+                        tooltipLabelFormatter={(value) =>
+                          new Date(value).toLocaleString()
+                        }
+                        xAxisValueFormatter={(value) =>
+                          new Date(value).toLocaleDateString()
+                        }
+                      />
+                    )}
                   </Tab.Content>
                 ) : (
                   <Tab.Content>
