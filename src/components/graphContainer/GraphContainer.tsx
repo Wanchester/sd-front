@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Nav, Tab, Row, Col, Container, Spinner } from "react-bootstrap";
+import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import BaseChart, { ChartProps } from "../charts/BaseChart";
 import apiMethods, { CombinationGraphResponse, StatisticData } from "../../API";
-
+import { LoadingSpinner } from "../loadingSpinner/LoadingSpinner";
 export interface GraphContainerProps {
   teamReq?: string[];
   nameReq?: string[];
@@ -170,7 +170,11 @@ const GraphContainer = (props: GraphContainerProps) => {
               </Col>
             </>
           ) : (
-            <Spinner animation="border" variant="light" />
+            // <Spinner animation="border" variant="light" />
+            <LoadingSpinner
+              isComponent={true}
+              componentTitle={"Statistic Graph"}
+            />
           )}
         </Row>
       </Tab.Container>

@@ -32,9 +32,9 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
   };
 
   return (
-    <Container fluid>
+    <>
       {player ? (
-        <>
+        <Container fluid>
           {user.role !== "player" ? (
             <Container>
               <Col>
@@ -94,11 +94,11 @@ const PlayerPage = ({ user }: { user: ProfileResponse }) => {
           ) : (
             <>{error}</>
           )}
-        </>
+        </Container>
       ) : (
         <LoadingSpinner />
       )}
-    </Container>
+    </>
   );
 };
 export default PlayerPage;

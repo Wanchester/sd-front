@@ -111,8 +111,8 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
                     header={[
                       { key: "playerName", label: "Player Name" },
                       { key: "Velocity", label: "Velocity" },
-                      { key: "Distance", label: "Distance" },
                       { key: "Height", label: "Height" },
+                      { key: "Distance", label: "Distance" },
                     ]}
                   />
                 )}

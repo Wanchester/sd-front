@@ -1,8 +1,9 @@
 import { MouseEventHandler, useCallback, useState } from "react";
 import { NavS } from "./SortableTableModified.Styles";
 import Table from "react-bootstrap/Table";
+import { LoadingSpinner } from "../loadingSpinner/LoadingSpinner";
 import { Link } from "react-router-dom";
-
+import moment from "moment";
 type Data = Record<string, string | number>[];
 
 type SortKeys = keyof Data[0];
@@ -82,60 +83,72 @@ const SortableTableModified = (props: TableData) => {
   }
   console.log(props.data);
   return (
-    <NavS>
-      <Table className="table table-dark table-striped">
-        <thead>
-          <tr>
-            {props.header.map((row) => {
-              return (
-                <td key={row.key}>
-                  {row.label}{" "}
-                  <SortButton
-                    columnKey={row.key}
-                    onClick={() => changeSort(row.key)}
-                    {...{
-                      sortOrder,
-                      sortKey,
-                    }}
-                  />
-                </td>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData().map((session) => {
-            return (
-              <tr key={Object.keys(session)[0]}>
-                <>
-                  {Object.keys(session).map((key) => {
-                    if (
-                      props.link &&
-                      props.linkList &&
-                      props.linkList.includes(key)
-                    ) {
-                      return (
-                        <td>
-                          <Link
-                            to={`/${props.link}/${encodeURIComponent(
-                              session[key]
-                            )}`}
-                          >
-                            {session[key]}
-                          </Link>
-                        </td>
-                      );
-                    } else {
-                      return <td>{session[key]}</td>;
-                    }
-                  })}
-                </>
+    <>
+      {props.data ? (
+        <NavS>
+          <Table className="table table-dark table-striped">
+            <thead>
+              <tr>
+                {props.header.map((row) => {
+                  return (
+                    <td key={row.key}>
+                      {row.label}{" "}
+                      <SortButton
+                        columnKey={row.key}
+                        onClick={() => changeSort(row.key)}
+                        {...{
+                          sortOrder,
+                          sortKey,
+                        }}
+                      />
+                    </td>
+                  );
+                })}
               </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </NavS>
+            </thead>
+            <tbody>
+              {sortedData().map((session) => {
+                return (
+                  <tr key={Object.keys(session)[0]}>
+                    <>
+                      {Object.keys(session).map((key) => {
+                        const formattedValue =
+                          moment(session[key]).isValid() &&
+                          !Number(session[key]) &&
+                          session[key] !== 0
+                            ? moment(session[key]).format("DD/MM/YYYY hh:mm:ss")
+                            : session[key];
+                        if (
+                          props.link &&
+                          props.linkList &&
+                          props.linkList.includes(key)
+                        ) {
+                          return (
+                            <td>
+                              <Link
+                                to={`/${props.link}/${encodeURIComponent(
+                                  formattedValue
+                                )}`}
+                              >
+                                {formattedValue}
+                              </Link>
+                            </td>
+                          );
+                        } else {
+                          return <td>{formattedValue}</td>;
+                        }
+                      })}
+                    </>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </NavS>
+      ) : (
+        <LoadingSpinner isComponent={true} componentTitle={"Statistic Table"} />
+      )}
+    </>
   );
 };
 
