@@ -5,6 +5,7 @@ const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let currentRoutes = [];
+  const exPath = ["team", "session", "player", "statistics"];
   currentRoutes = location.pathname !== "/" ? location.pathname.split("/") : [];
   if (currentRoutes.length > 0) {
     currentRoutes.shift();
@@ -21,7 +22,8 @@ const Breadcrumbs = () => {
           <Breadcrumb.Item active>{currentRoutes[0]}</Breadcrumb.Item>
         ) : (
           currentRoutes.map((route, index) => {
-            return index !== currentRoutes.length - 1 ? (
+            return index !== currentRoutes.length - 1 &&
+              !exPath.includes(route) ? (
               <Breadcrumb.Item
                 onClick={() => {
                   navigate("/" + route);

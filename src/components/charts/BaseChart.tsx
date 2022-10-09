@@ -49,6 +49,24 @@ export interface ChartProps {
      */
     type?: "bar" | "line";
   }[];
+
+  /**
+   * Whether to sort all categories on the X-axis.
+   * Default to `false`.
+   */
+  sortXAxis?: boolean;
+
+  /**
+   * A function to format the tooltip labels. If not provided, the values will
+   * be kept as is.
+   */
+  tooltipLabelFormatter?: (tickValue: string) => string;
+
+  /**
+   * A function to format the x-axis values. If not provided, the values will
+   * be kept as is.
+   */
+  xAxisValueFormatter?: (tickValue: string) => string;
 }
 
 export default function BaseChart(props: ChartProps) {
@@ -60,6 +78,10 @@ export default function BaseChart(props: ChartProps) {
     type: "line",
     ...graph,
   }));
+  const sortXAxis = props.sortXAxis || false;
+  const tooltipLabelFormatter =
+    props.tooltipLabelFormatter || ((value) => value);
+  const xAxisValueFormatter = props.xAxisValueFormatter || ((value) => value);
 
   const data = Object.values(
     graphs
@@ -90,6 +112,10 @@ export default function BaseChart(props: ChartProps) {
       }, {} as Record<string, Record<string, string | number>>)
   );
 
+  if (sortXAxis) {
+    data.sort((a, b) => String(a.x).localeCompare(b.x as string));
+  }
+
   return (
     <Container style={{ background: "#fffdfa" }}>
       <ResponsiveContainer aspect={aspect}>
@@ -101,15 +127,19 @@ export default function BaseChart(props: ChartProps) {
           {flip ? (
             <>
               <XAxis type="number" />
-              <YAxis dataKey="x" type="category" />
+              <YAxis
+                dataKey="x"
+                tickFormatter={xAxisValueFormatter}
+                type="category"
+              />
             </>
           ) : (
             <>
-              <XAxis dataKey="x" />
+              <XAxis dataKey="x" tickFormatter={xAxisValueFormatter} />
               <YAxis />
             </>
           )}
-          <Tooltip />
+          <Tooltip labelFormatter={(value) => tooltipLabelFormatter(value)} />
           <Legend verticalAlign="top" height={36} />
           <CartesianGrid stroke="#d3d3d3" strokeDasharray="5 5" />
           {Array.from(

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Table, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
+import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import Slider from "./components/Slider";
 import apiMethods, { PlayerList, ProfileResponse } from "./API";
 import GraphContainer from "./components/graphContainer/GraphContainer";
@@ -23,10 +24,10 @@ export interface StatsInterface {
     highDistance: number;
   }[];
 }
-const TeamPage: React.FC<{ player: ProfileResponse }> = ({
-  player,
+const TeamPage: React.FC<{ user: ProfileResponse }> = ({
+  user,
 }: {
-  player: ProfileResponse;
+  user: ProfileResponse;
 }) => {
   const [playerList, setPlayerList] = useState(null as PlayerList | null);
   const [playerNames, setPlayerNames] = useState([] as string[]);
@@ -63,13 +64,13 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
     if (teamName) {
       apiMethods
         .getTrainingSession(
-          player.role === "player" ? [player.name] : undefined,
+          user.role === "player" ? [user.name] : undefined,
           [teamName],
           []
         )
         .then((session) => setTeamSession(session));
     }
-  }, [teamName, player.name, player.role]);
+  }, [teamName, user.name, user.role]);
 
   if (playerList && playerList.players.length < 1) return <div>Loading </div>;
 
@@ -79,7 +80,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
         <>
           {teamName && (
             <Col>
-              <Header content={teamName} />
+              <Header content={teamName} userRole={user.role} />
             </Col>
           )}
           {playerList ? (
@@ -95,7 +96,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
                     <Slider {...SliderProps}>
                       {playerList &&
                         playerList.players.map((p) =>
-                          player.role !== "player" ? (
+                          user.role !== "player" ? (
                             <Link to={`/player/${p.username}`}>
                               <div key={p.name}>
                                 <img
@@ -145,9 +146,7 @@ const TeamPage: React.FC<{ player: ProfileResponse }> = ({
           )}
         </>
       ) : (
-        <Container className="h-100 w-100 d-flex justify-content-center">
-          <Spinner animation="border" variant="light" />
-        </Container>
+        <LoadingSpinner />
       )}
     </Container>
   );

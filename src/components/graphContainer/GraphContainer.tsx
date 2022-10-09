@@ -146,6 +146,13 @@ const GraphContainer = (props: GraphContainerProps) => {
                       <BaseChart
                         flip={props.isLine ? false : true}
                         graphs={processedData}
+                        sortXAxis={true}
+                        tooltipLabelFormatter={(value) =>
+                          new Date(value).toLocaleString()
+                        }
+                        xAxisValueFormatter={(value) =>
+                          new Date(value).toLocaleDateString()
+                        }
                       />
                     }
                   </Tab.Content>
