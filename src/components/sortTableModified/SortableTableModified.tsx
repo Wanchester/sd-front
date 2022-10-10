@@ -112,9 +112,12 @@ const SortableTableModified = (props: TableData) => {
                   <tr key={Object.keys(session)[0]}>
                     <>
                       {Object.keys(session).map((key) => {
+                        console.log(session[key]);
                         const formattedValue =
                           moment(session[key]).isValid() &&
                           !Number(session[key]) &&
+                          !String(session[key]).includes("NULL") &&
+                          !String(session[key]).includes("0") &&
                           session[key] !== 0
                             ? moment(session[key]).format("DD/MM/YYYY hh:mm:ss")
                             : session[key];
