@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TeamName = styled.p`
+export const TeamName = styled.div`
   color: var(--white);
   opacity: 1;
   display: inline-block;
@@ -13,4 +13,8 @@ export const TeamName = styled.p`
   height: 220px;
   font-size: large;
   padding: 5px;
+
+  &:hover {
+    background-color: #22222c;
+  }
 `;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import Slider from "./components/Slider";
 import apiMethods, { PlayerList, ProfileResponse } from "./API";
@@ -35,13 +34,6 @@ const TeamPage: React.FC<{ user: ProfileResponse }> = ({
     null as ProfileResponse["trainingSessions"] | null
   );
   const [error, setError] = useState("");
-  // const [isDialogOpen, setIsDialogOpen] = useState(false);
-  // const [activePlayer, setActivePlayer] = useState<PlayerList>();
-
-  // const handleDialogOpen = (players: PlayerList) => {
-  //   setIsDialogOpen(true);
-  //   setActivePlayer(players);
-  // };
   const { teamName } = useParams();
 
   useEffect(() => {
@@ -72,74 +64,62 @@ const TeamPage: React.FC<{ user: ProfileResponse }> = ({
     }
   }, [teamName, user.name, user.role]);
 
-  if (playerList && playerList.players.length < 1) return <div>Loading </div>;
+  if (playerList && playerList.players.length < 1) {
+    return <div>No statistics.</div>;
+  }
 
   return (
-    <Container fluid>
+    <Container>
       {playerList && playerNames ? (
         <>
-          {teamName && (
-            <Col>
-              <Header content={teamName} userRole={user.role} />
-            </Col>
-          )}
+          {teamName && <Header content={teamName} userRole={user.role} />}
           {playerList ? (
             <>
-              <Container fluid>
-                <Row>
-                  <Col md={{ span: 7, offset: 2 }}>
-                    <h2>Player List</h2>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Slider {...SliderProps}>
-                      {playerList &&
-                        playerList.players.map((p) =>
-                          user.role !== "player" ? (
-                            <Link to={`/player/${p.username}`}>
-                              <div key={p.name}>
-                                <img
-                                  src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
-                                  alt="xd"
-                                />
-                                <>{p.name}</>
-                              </div>
-                            </Link>
-                          ) : (
-                            <div key={p.name}>
-                              <img
-                                src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
-                                alt="xd"
-                              />
-                              <>{p.name}</>
-                            </div>
-                          )
-                        )}
-                    </Slider>
-                  </Col>
-                </Row>
-              </Container>
-              <Table responsive bordered className="justify-content-md-center">
-                <Row className="col-md-8 offset-md-1">
+              <Row>
+                <Col className="mb-2">
+                  <h2>Player List</h2>
+                </Col>
+              </Row>
+              <Slider {...SliderProps}>
+                {playerList &&
+                  playerList.players.map((p, i) =>
+                    user.role !== "player" ? (
+                      <Link key={i} to={`/player/${p.username}`}>
+                        <div>
+                          <img src="/image/player.jpg" alt="player's avatar" />
+                          <>{p.name}</>
+                        </div>
+                      </Link>
+                    ) : (
+                      <div key={i}>
+                        <img src="/image/player.jpg" alt="player's avatar" />
+                        <>{p.name}</>
+                      </div>
+                    )
+                  )}
+              </Slider>
+              <Row className="g-0">
+                <Col xs={12} className="py-4">
+                  <h3 className="mb-3">All-time Performance</h3>
                   {teamName && playerNames && (
                     <GraphContainer teamReq={[teamName]} isComposed={true} />
                   )}
-                </Row>
-                <Row className="col-md-8 offset-md-1">
+                </Col>
+                <Col xs={12} className="py-4">
+                  <h3 className="mb-3">Player Performance</h3>
                   {teamName && playerNames && (
                     <GraphContainer
                       teamReq={[teamName]}
                       nameReq={playerNames}
                     />
                   )}
-                </Row>
-                <Row className="col-md-10 offset-md-1">
+                </Col>
+                <Col xs={12} className="py-4">
                   {teamSession && (
                     <TrainingSession trainingList={teamSession} />
                   )}
-                </Row>
-              </Table>
+                </Col>
+              </Row>
             </>
           ) : (
             <>{error}</>

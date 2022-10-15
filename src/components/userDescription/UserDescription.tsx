@@ -39,7 +39,7 @@ const UserDescription = ({
         responsive
         bordered
         variant="dark"
-        className="table-condensed mb-0"
+        className="table-condensed mb-2"
       >
         {userList &&
           Object.entries(userList).map((arr, i) => {
@@ -64,6 +64,7 @@ const UserDescription = ({
                           arr[0] === "weight" ||
                           arr[0] === "dob" ? (
                             <input
+                              className="w-100"
                               type="text"
                               id={arr[0]}
                               name={arr[0]}
@@ -84,8 +85,11 @@ const UserDescription = ({
       </Table>
       {isPlayer &&
         (isEdit ? (
-          <Button onClick={() => setEdit(!isEdit)}>
-            <FaEdit />
+          <Button
+            className="d-inline-flex align-items-center"
+            onClick={() => setEdit(!isEdit)}
+          >
+            <FaEdit className="me-2" /> Edit
           </Button>
         ) : (
           <Button onClick={() => submitChange()}>Save changes</Button>

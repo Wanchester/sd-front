@@ -157,7 +157,7 @@ const apiMethods = {
     return axios
       .post("/api/lineGraph", {
         sessions: sessionReq, // [sessionName]
-        names: nameReq, //[]
+        names: nameReq, // []
         teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
         aggregate: { func: funcReq || "mean", every: every || 86400 }, // funcReq default to average
@@ -175,11 +175,10 @@ const apiMethods = {
     return axios
       .post("/api/combinationGraph", {
         sessions: sessionReq, // [sessionName]
-        names: nameReq, //[]
+        names: nameReq, // []
         teams: teamReq, // []
         fields: ["Velocity", "Height", "Distance"],
         aggregate: { func: funcReq || "mean" }, // funcReq default to average
-        // time_window: { func: funcReq || "mean" },
       })
       .then((response) => response.data as CombinationGraphResponse);
   },

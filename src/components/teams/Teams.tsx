@@ -1,4 +1,3 @@
-import { Table } from "react-bootstrap";
 import { TeamName } from "./Teams.styles";
 import TeamAvatar from "./TeamAvatar";
 import { Link } from "react-router-dom";
@@ -15,29 +14,26 @@ const Teams = ({
     return user.teams.includes(item);
   };
   return (
-    <Table>
-      <tbody>
-        {teamsList &&
-          teamsList
-            .filter((t) => checkExist(t))
-            .map((item, i) => {
-              return (
-                <>
-                  <Link to={`/team/${item}`}>
-                    <td key={i}>
-                      <tr>
-                        <TeamName>
-                          <TeamAvatar imageLink={"/image/team.jpg"} />
-                          {item ? item : "Not Available"}
-                        </TeamName>
-                      </tr>
-                    </td>
-                  </Link>
-                </>
-              );
-            })}
-      </tbody>
-    </Table>
+    <div className="clearfix w-100">
+      {teamsList &&
+        teamsList
+          .filter((t) => checkExist(t))
+          .map((item, i, arr) => {
+            return (
+              <Link
+                key={i}
+                to={`/team/${item}`}
+                className="float-start"
+                style={{ marginRight: i < arr.length - 1 ? "1rem" : 0 }}
+              >
+                <TeamName>
+                  <TeamAvatar imageLink={"/image/team.jpg"} />
+                  {item ? item : "Not Available"}
+                </TeamName>
+              </Link>
+            );
+          })}
+    </div>
   );
 };
 export default Teams;

@@ -29,7 +29,7 @@ const Nav: React.FC = () => {
             <BsArrowDownCircleFill />
           </NavsIcon2>
           <Sli12>
-            <Avatar imageLink="image/logo.jpeg" />
+            <Avatar imageLink="/image/logo.jpeg" />
           </Sli12>
           <Link to="/">
             <Button>HomePage</Button>
