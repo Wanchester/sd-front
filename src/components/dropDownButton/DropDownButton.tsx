@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Form, Container } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 const DropDownButton = ({
   optionList,
   setValue,
@@ -19,24 +19,20 @@ const DropDownButton = ({
   }, [optionList]);
 
   return (
-    <>
-      <Container fluid className="bg-white">
-        <Form.Select
-          defaultValue={selectedOption}
-          value={selectedOption}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            setSelectedOption(e.currentTarget.value);
-            if (e.currentTarget.value === "All") {
-              setValue([]);
-            } else {
-              setValue([e.currentTarget.value]);
-            }
-          }}
-        >
-          {options && options.map((o) => <option value={o}>{o}</option>)}
-        </Form.Select>
-      </Container>
-    </>
+    <Form.Select
+      defaultValue={selectedOption}
+      value={selectedOption}
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedOption(e.currentTarget.value);
+        if (e.currentTarget.value === "All") {
+          setValue([]);
+        } else {
+          setValue([e.currentTarget.value]);
+        }
+      }}
+    >
+      {options && options.map((o) => <option value={o}>{o}</option>)}
+    </Form.Select>
   );
 };
 export default DropDownButton;

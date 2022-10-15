@@ -1,6 +1,10 @@
 import { Breadcrumb } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
+function upperFirstLetter(str: string) {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,15 +29,18 @@ const Breadcrumbs = () => {
             return index !== currentRoutes.length - 1 &&
               !exPath.includes(route) ? (
               <Breadcrumb.Item
+                key={index}
                 onClick={() => {
                   navigate("/" + route);
                 }}
               >
-                {decodeURIComponent(route)}
+                {upperFirstLetter(decodeURIComponent(route))}
               </Breadcrumb.Item>
             ) : (
-              <Breadcrumb.Item active>
-                {decodeURIComponent(route)}
+              <Breadcrumb.Item key={index} active>
+                {index === currentRoutes.length - 1
+                  ? decodeURIComponent(route)
+                  : upperFirstLetter(decodeURIComponent(route))}
               </Breadcrumb.Item>
             );
           })

@@ -1,6 +1,7 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import Breadcrumbs from "../breadcrumbs/Breadcrumbs";
 import apiMethods from "../../API";
+import { Link } from "react-router-dom";
 const Header = ({
   content,
   userRole,
@@ -9,35 +10,33 @@ const Header = ({
   userRole: string;
 }) => {
   return (
-    <Container className="py-3 mb-4 m-0 " fluid>
-      <Row>
-        <Col sm={3} md={3} lg={3} xl={3}>
-          <h1 className="mb-0">{content}</h1>
+    <div className="mb-4">
+      <Row className="py-3 mb-2">
+        <Col className="flex-grow-0">
+          <h1 className="mb-0 text-nowrap">
+            <Link title="Homepage" to="/">
+              <img
+                src="/image/logo.jpeg"
+                style={{ height: "4rem", width: "4rem" }}
+              />
+            </Link>
+            <span className="ms-4 align-middle">{content}</span>
+          </h1>
         </Col>
-        <Col
-          sm={6}
-          md={6}
-          lg={6}
-          xl={6}
-          className="d-flex justify-content-center"
-        >
-          <p>view as {userRole}</p>
+        <Col className="d-none d-sm-flex justify-content-center align-items-center">
+          <p className="mb-0">Viewing as {userRole}</p>
         </Col>
-        <Col
-          sm={3}
-          md={3}
-          lg={3}
-          xl={3}
-          className="d-flex justify-content-end "
-        >
+        <Col className="flex-sm-grow-0 d-flex justify-content-end align-self-center">
           <Button
-            className="btn btn-secondary align-text-centers"
-            size="lg"
-            href="#"
+            className="btn btn-secondary align-text-center"
+            type="button"
             onClick={async (event) => {
               event.preventDefault();
-              await apiMethods.logOut();
-              window.location.reload();
+
+              if (confirm("Are you sure to log out?")) {
+                await apiMethods.logOut();
+                window.location.reload();
+              }
             }}
           >
             Logout
@@ -46,7 +45,7 @@ const Header = ({
       </Row>
 
       <Breadcrumbs />
-    </Container>
+    </div>
   );
 };
 export default Header;

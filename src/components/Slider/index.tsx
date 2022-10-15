@@ -3,7 +3,7 @@ import SliderItem from "./SliderItem";
 import { StyledSliderWrapper, StyledSlider } from "./SliderStyles";
 
 type SliderProps = {
-  children?: React.ReactNode; // eslint-disable-line
+  children?: React.ReactNode;
   zoomFactor: number;
   slideMargin: number;
   maxVisibleSlides: number;

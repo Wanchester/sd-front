@@ -16,7 +16,7 @@ export const LoadingSpinner = ({
           </Row>
           <Row className="justify-content-center">
             <p className="text-light text-center">
-              ...Loading {componentTitle}
+              Loading {componentTitle}...
             </p>
           </Row>
         </Container>

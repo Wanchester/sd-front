@@ -1,5 +1,4 @@
-import Sidebar from "./components/Nav/Sidebar";
-import { Container, Row, Table, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import { useParams } from "react-router-dom";
 import DropDownButton from "./components/dropDownButton/DropDownButton";
@@ -35,29 +34,19 @@ const StatisticPage = ({ user }: { user: ProfileResponse }) => {
     }
   }, [player, teams]);
   return (
-    <Container fluid>
+    <Container>
       {player ? (
         <>
-          <Container fluid>
-            <Row>
-              <Sidebar />
-            </Row>
-          </Container>
-          <Col>
-            <Header content={player.name} userRole={user.role} />
-          </Col>
-
-          <Table responsive bordered>
-            <Row>
-              {player && selectedTeam && (
-                <GraphContainer
-                  isComposed={true}
-                  teamReq={selectedTeam.filter((team) => checkExist(team))}
-                  nameReq={[player.name]}
-                />
-              )}
-            </Row>
-            <Row sm={3} md={3} lg={3} xl={3}>
+          <Header content={player.name} userRole={user.role} />
+          {player && selectedTeam && (
+            <GraphContainer
+              isComposed={true}
+              teamReq={selectedTeam.filter((team) => checkExist(team))}
+              nameReq={[player.name]}
+            />
+          )}
+          <Row className="justify-content-center py-4">
+            <Col>
               {teams && (
                 <DropDownButton
                   optionList={teams.filter((team) => checkExist(team))}
@@ -66,20 +55,14 @@ const StatisticPage = ({ user }: { user: ProfileResponse }) => {
                   }}
                 />
               )}
-            </Row>
-          </Table>
-          <Table responsive bordered>
-            {player && (
-              <Row>
-                {teams && (
-                  <GraphContainer
-                    teamReq={teams.filter((team) => checkExist(team))}
-                    nameReq={[player.name]}
-                  />
-                )}
-              </Row>
-            )}
-          </Table>
+            </Col>
+          </Row>
+          {player && teams && (
+            <GraphContainer
+              teamReq={teams.filter((team) => checkExist(team))}
+              nameReq={[player.name]}
+            />
+          )}
         </>
       ) : error ? (
         <>{error}</>

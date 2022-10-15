@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiMethods, { ProfileResponse } from "./API";
-import { Table, Col, Container } from "react-bootstrap";
+import { Table, Col, Container, Row } from "react-bootstrap";
 import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
 import GraphContainer from "./components/graphContainer/GraphContainer";
 import Header from "./components/header/Header";
@@ -46,7 +46,6 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
       apiMethods
         .getLineGraphStatistic([], [], [sessionName], undefined, undefined)
         .then((data) => {
-          console.log(data);
           Object.entries(data).map((entry) => {
             tableData.push({
               playerName: entry[0],
@@ -65,7 +64,6 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
                 ])
               ),
             });
-            console.log(tableData);
           });
         });
 
@@ -74,9 +72,9 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
   }, [sessionName]);
 
   return (
-    <Container fluid>
+    <Container>
       {trainingSession && playerData ? (
-        <>
+        <Row>
           {sessionName && (
             <Col>
               {sessionName && (
@@ -121,7 +119,7 @@ const SessionPage = ({ user }: { user: ProfileResponse }) => {
           ) : (
             <>{error}</>
           )}
-        </>
+        </Row>
       ) : (
         <LoadingSpinner />
       )}

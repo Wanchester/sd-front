@@ -81,7 +81,7 @@ const SortableTableModified = (props: TableData) => {
     setSortOrder(sortOrder === "ascn" ? "desc" : "ascn");
     setSortKey(key);
   }
-  console.log(props.data);
+
   return (
     <>
       {props.data ? (
@@ -89,9 +89,9 @@ const SortableTableModified = (props: TableData) => {
           <Table className="table table-dark table-striped">
             <thead>
               <tr>
-                {props.header.map((row) => {
+                {props.header.map((row, i) => {
                   return (
-                    <td key={row.key}>
+                    <td key={i}>
                       {row.label}{" "}
                       <SortButton
                         columnKey={row.key}
@@ -107,12 +107,11 @@ const SortableTableModified = (props: TableData) => {
               </tr>
             </thead>
             <tbody>
-              {sortedData().map((session) => {
+              {sortedData().map((session, i) => {
                 return (
-                  <tr key={Object.keys(session)[0]}>
+                  <tr key={i}>
                     <>
-                      {Object.keys(session).map((key) => {
-                        console.log(session[key]);
+                      {Object.keys(session).map((key, ii) => {
                         const formattedValue =
                           moment(session[key]).isValid() &&
                           !Number(session[key]) &&
@@ -127,7 +126,7 @@ const SortableTableModified = (props: TableData) => {
                           props.linkList.includes(key)
                         ) {
                           return (
-                            <td>
+                            <td key={ii}>
                               <Link
                                 to={`/${props.link}/${encodeURIComponent(
                                   formattedValue
@@ -138,7 +137,7 @@ const SortableTableModified = (props: TableData) => {
                             </td>
                           );
                         } else {
-                          return <td>{formattedValue}</td>;
+                          return <td key={ii}>{formattedValue}</td>;
                         }
                       })}
                     </>
