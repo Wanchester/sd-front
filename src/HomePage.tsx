@@ -15,26 +15,18 @@ const HomePage = ({ user }: { user: ProfileResponse }) => {
         <Container>
           <Header content={"Home"} userRole={user.role} />
           <Row>
-            <Col className="flex-grow-1" md={4} lg={3}>
-              <div className="w-100 border-end">
+            <Col className="flex-grow-1 text-center" md={4} lg={3}>
+              <div className="w-100 border-end mb-2">
                 <Avatar imageLink="/image/avatar.jpeg" />
               </div>
-            </Col>
-            <Col className="flex-grow-1 mt-2 mt-md-0" md={8} lg={9}>
-              <UserDescription userList={user} isPlayer={true} />
-            </Col>
-            <Col
-              className="d-flex flex-grow-1 justify-content-right align-self-end"
-              sm={6}
-              md={4}
-              lg={2}
-              xl={3}
-            >
               {user.role === "player" && (
                 <Link to={`/statistics/${user.name}`}>
                   <Button>My statistics</Button>
                 </Link>
               )}
+            </Col>
+            <Col className="flex-grow-1 mt-2 mt-md-0" md={8} lg={9}>
+              <UserDescription userList={user} isPlayer={true} />
             </Col>
           </Row>
           <Row className="pt-5">

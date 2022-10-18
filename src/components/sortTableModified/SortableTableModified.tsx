@@ -112,14 +112,13 @@ const SortableTableModified = (props: TableData) => {
                   <tr key={i}>
                     <>
                       {Object.keys(session).map((key, ii) => {
-                        const formattedValue =
-                          moment(session[key]).isValid() &&
-                          !Number(session[key]) &&
-                          !String(session[key]).includes("NULL") &&
-                          !String(session[key]).includes("0") &&
-                          session[key] !== 0
-                            ? moment(session[key]).format("DD/MM/YYYY hh:mm:ss")
-                            : session[key];
+                        const formattedValue = moment(
+                          session[key],
+                          moment.ISO_8601
+                        ).isValid()
+                          ? moment(session[key]).format("DD/MM/YYYY hh:mm:ss")
+                          : session[key];
+
                         if (
                           props.link &&
                           props.linkList &&
